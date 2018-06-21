@@ -8,42 +8,29 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MemberControllerTest {
-    private MockMvc mockMvc;
-
     @Mock
     private MemberService memberService;
 
     @InjectMocks
     private MemberController memberController;
 
-    @Before
-    public void init(){
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(memberController)
-                .build();
-    }
-
     @Test
     public void should_get_member_by_id() {
         Mockito.when(memberService.findBy(1L)).thenReturn(new Member(1L, "Seaborn Lee"));
 
         given().
-                mockMvc(mockMvc).
+                standaloneSetup(memberController).
         when().
-                get("/members/{id}", 1).
+                get("/members/1").
         then().
                 statusCode(200).
                 body("id", equalTo(1)).
