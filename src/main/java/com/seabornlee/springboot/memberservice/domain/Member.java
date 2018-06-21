@@ -1,8 +1,19 @@
 package com.seabornlee.springboot.memberservice.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Member {
-    private final Long id;
-    private final String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
+    private char VIP;
+
+    public Member() { }
 
     public Member(Long id, String name) {
         this.id = id;
@@ -15,5 +26,13 @@ public class Member {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isVIP() {
+        return this.VIP == 'y';
+    }
+
+    public void setVIP() {
+        this.VIP = 'y';
     }
 }
