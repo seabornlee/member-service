@@ -18,8 +18,11 @@ public class MemberService {
 
     public boolean upgradeVIP(long id) {
         Optional<Member> memberOptional = memberRepository.findById(id);
-        Member member = memberOptional.get();
+        if (!memberOptional.isPresent()) {
+            return false;
+        }
 
+        Member member = memberOptional.get();
         member.setVIP();
         memberRepository.save(member);
 

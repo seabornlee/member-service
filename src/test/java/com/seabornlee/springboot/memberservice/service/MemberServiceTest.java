@@ -33,4 +33,14 @@ public class MemberServiceTest {
         Member member = memberService.findBy(id);
         assertThat(member.isVIP()).isTrue();
     }
+
+    @Test
+    public void should_not_upgrade_VIP_when_member_not_exist() {
+        // when
+        long not_exist_member_id = 99999L;
+        boolean isSuccessfully = memberService.upgradeVIP(not_exist_member_id);
+
+        // then
+        assertThat(isSuccessfully).isFalse();
+    }
 }
