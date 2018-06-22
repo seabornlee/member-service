@@ -11,6 +11,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String mobile;
     private char VIP;
 
     public Member() { }
@@ -18,6 +19,12 @@ public class Member {
     public Member(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Member(Long id, String name, String mobile) {
+        this.id = id;
+        this.name = name;
+        this.mobile = mobile;
     }
 
     public Long getId() {
@@ -34,5 +41,9 @@ public class Member {
 
     public void setVIP() {
         this.VIP = 'y';
+    }
+
+    public String getMobile() {
+        return this.mobile;
     }
 }

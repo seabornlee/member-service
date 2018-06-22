@@ -2,7 +2,6 @@ package com.seabornlee.springboot.memberservice;
 
 import com.seabornlee.springboot.memberservice.domain.Member;
 import com.seabornlee.springboot.memberservice.service.MemberService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
