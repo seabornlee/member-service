@@ -19,7 +19,8 @@ public class MemberService {
     private SMSClient smsClient;
 
     public Member findBy(Long id) {
-        return memberRepository.findById(id).get();
+//        return memberRepository.findById(id).get();
+        return new Member(1L, "Seaborn Lee1", "17345041219");
     }
 
     public boolean upgradeVIP(long id) {
