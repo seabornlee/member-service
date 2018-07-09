@@ -1,4 +1,4 @@
-package com.seabornlee.springboot.memberservice;
+package com.seabornlee.springboot.memberservice.controller;
 
 import com.seabornlee.springboot.memberservice.domain.Member;
 import com.seabornlee.springboot.memberservice.service.MemberService;
