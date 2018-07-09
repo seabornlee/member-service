@@ -8,11 +8,11 @@ node {
         sh './mvnw test'
     }
     
-    stage('Build web') {
-        sh './mvnw build'
+    stage('Build API') {
+        sh './mvnw package'
     }
 
     stage('Gen image') {
-        sh 'docker build . -t 127.0.0.1:5000/member-service:0.0.$BUILD_NUMBER'
+        sh 'docker build . -t 192.168.1.103:5000/member-service:0.0.$BUILD_NUMBER'
     }
 }
