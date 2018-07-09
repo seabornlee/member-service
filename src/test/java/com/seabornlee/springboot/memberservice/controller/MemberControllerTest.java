@@ -10,6 +10,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.NoSuchElementException;
+
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
@@ -35,4 +37,17 @@ public class MemberControllerTest {
                 body("id", equalTo(1)).
                 body("name", equalTo("Seaborn Lee"));
     }
+
+    @Test
+    public void should_get_404_when_member_not_exist() {
+        Mockito.when(memberService.findBy(1L)).thenThrow(new NoSuchElementException());
+
+        given().
+                standaloneSetup(memberController).
+        when().
+                get("/members/1").
+        then().
+                statusCode(404);
+    }
+
 }

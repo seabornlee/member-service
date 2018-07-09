@@ -14,6 +14,10 @@ public class MemberController {
 
     @GetMapping(value = "/{id}")
     public @ResponseBody Member getById(@PathVariable Long id) {
-        return memberService.findBy(id);
+        try {
+            return memberService.findBy(id);
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
     }
 }
