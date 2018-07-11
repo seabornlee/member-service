@@ -1,4 +1,6 @@
 node {
+    triggers { pollSCM('* * * * *') }
+
     stage('Checkout repo') {
         git url: 'https://github.com/seabornlee/member-service.git',
             branch: 'master'
