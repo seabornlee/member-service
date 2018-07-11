@@ -36,4 +36,8 @@ public class MemberService {
 
         return true;
     }
+
+    public Member save(Member member) {
+        return memberRepository.save(member);
+    }
 }

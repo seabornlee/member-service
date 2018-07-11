@@ -46,4 +46,12 @@ public class Member {
     public String getMobile() {
         return this.mobile;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 }
