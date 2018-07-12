@@ -17,7 +17,8 @@ public class MemberController {
     MemberService memberService;
 
     @PostMapping
-    public @ResponseBody ResponseEntity<Member> create(@RequestBody Member member) {
+    public @ResponseBody
+    ResponseEntity<Member> create(@RequestBody Member member) {
         Member result = memberService.save(member);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -28,7 +29,8 @@ public class MemberController {
     }
 
     @GetMapping(value = "/{id}")
-    public @ResponseBody Member getById(@PathVariable Long id) {
+    public @ResponseBody
+    Member getById(@PathVariable Long id) {
         try {
             return memberService.findBy(id);
         } catch (Exception e) {
