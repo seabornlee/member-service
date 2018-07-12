@@ -10,19 +10,27 @@ pipeline {
 
     stages {
         stage('Checkout repo') {
-            git url: 'https://github.com/seabornlee/member-service.git', branch: 'master'
+            steps {
+                git url: 'https://github.com/seabornlee/member-service.git', branch: 'master'
+            }
         }
 
         stage('Test') {
-            sh './mvnw test'
+            steps {
+                sh './mvnw test'
+            }
         }
 
         stage('Package') {
-            sh './mvnw package'
+            steps {
+                sh './mvnw package'
+            }
         }
 
         stage('Gen image') {
-            sh 'docker build . -t 192.168.1.103:5000/member-service:0.0.$BUILD_NUMBER'
+            steps {
+                sh 'docker build . -t 192.168.1.103:5000/member-service:0.0.$BUILD_NUMBER'
+            }
         }
     }
 }
