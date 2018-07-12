@@ -1,20 +1,28 @@
-node {
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+
     triggers { pollSCM('* * * * *') }
 
-    stage('Checkout repo') {
-        git url: 'https://github.com/seabornlee/member-service.git',
-            branch: 'master'
-    }
+    stages {
+        stage('Checkout repo') {
+            git url: 'https://github.com/seabornlee/member-service.git', branch: 'master'
+        }
 
-    stage('Test') {
-        sh './mvnw test'
-    }
-    
-    stage('Build API') {
-        sh './mvnw package'
-    }
+        stage('Test') {
+            sh './mvnw test'
+        }
 
-    stage('Gen image') {
-        sh 'docker build . -t 192.168.1.103:5000/member-service:0.0.$BUILD_NUMBER'
+        stage('Package') {
+            sh './mvnw package'
+        }
+
+        stage('Gen image') {
+            sh 'docker build . -t 192.168.1.103:5000/member-service:0.0.$BUILD_NUMBER'
+        }
     }
 }
