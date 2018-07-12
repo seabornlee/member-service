@@ -18,6 +18,13 @@ pipeline {
             }
         }
 
+        stage('Check Style') {
+            steps {
+                sh './mvnw validate'
+                step([$class: 'CheckStylePublisher', pattern: 'target/checkstyle-result.xml'])
+            }
+        }
+
         stage('Package') {
             steps {
                 sh './mvnw clean package -Dunit-tests.skip=true -Dintegration-tests.skip=true'
