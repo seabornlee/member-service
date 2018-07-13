@@ -5,33 +5,32 @@ import com.seabornlee.springboot.memberservice.domain.Member;
 import com.seabornlee.springboot.memberservice.repository.MemberRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Optional;
 
 import static com.seabornlee.springboot.memberservice.service.MemberService.SMS_TEMPLATE_ID_VIP;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 public class MemberServiceTest {
-    @Autowired
+    @InjectMocks
     private MemberService memberService;
 
-    @MockBean
+    @Mock
     private SMSClient smsClient;
 
-    @Autowired
+    @Mock
     private MemberRepository memberRepository;
 
     @Test
     public void should_upgrade_VIP_succeed() {
         // given
         long id = 1L;
-        memberRepository.save(new Member(id, "Seaborn Lee"));
+        when(memberRepository.findById(id)).thenReturn(Optional.of(new Member(id, "Seaborn Lee")));
 
         // when
         boolean isSuccessfully = memberService.upgradeVIP(id);
@@ -46,20 +45,22 @@ public class MemberServiceTest {
     public void should_send_SMS_when_upgrade_VIP_succeed() {
         // given
         long id = 1L;
-        memberRepository.save(new Member(id, "Seaborn Lee", "17345041219"));
+        String mobile = "17345041219";
+        when(memberRepository.findById(id)).thenReturn(Optional.of(new Member(id, "Seaborn Lee", mobile)));
 
         // when
         boolean isSuccessfully = memberService.upgradeVIP(id);
 
         // then
         assertThat(isSuccessfully).isTrue();
-        verify(smsClient, times(1)).sendTo("17345041219", SMS_TEMPLATE_ID_VIP);
+        verify(smsClient, times(1)).sendTo(mobile, SMS_TEMPLATE_ID_VIP);
     }
 
     @Test
     public void should_not_upgrade_VIP_when_member_not_exist() {
         // when
         long not_exist_member_id = 99999L;
+        when(memberRepository.findById(not_exist_member_id)).thenReturn(Optional.empty());
         boolean isSuccessfully = memberService.upgradeVIP(not_exist_member_id);
 
         // then
