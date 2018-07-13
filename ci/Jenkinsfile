@@ -12,7 +12,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh './mvnw test'
+                sh './mvnw test -Dcheckstyle.skip=true'
                 junit 'target/surefire-reports/*.xml'
                 jacoco execPattern:'target/jacoco.exec', classPattern: '**/classes', sourcePattern: 'src/main/java'
             }
