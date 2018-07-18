@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-public class DatasourceConfig {
+public class DataSourceConfig {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
