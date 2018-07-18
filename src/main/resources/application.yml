@@ -37,7 +37,7 @@ spring:
 mybatis:
      mapperLocations: classpath*:mapping/**/*.xml
      typeAliasesPackage: com.seabornlee.springboot.memberservice.domain
-     mapperScanPackage: com.seabornlee.springboot.memberservice.dao
+     mapperScanPackage: com.seabornlee.springboot.memberservice.mapper
      configLocation: classpath:mybatis_config.xml
 server:
     port: 8888

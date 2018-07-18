@@ -2,10 +2,12 @@ package com.seabornlee.springboot.memberservice.service;
 
 import com.seabornlee.springboot.memberservice.client.SMSClient;
 import com.seabornlee.springboot.memberservice.domain.Member;
+import com.seabornlee.springboot.memberservice.mapper.MemberMapper;
 import com.seabornlee.springboot.memberservice.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +19,9 @@ public class MemberService {
 
     @Autowired
     private SMSClient smsClient;
+
+    @Autowired
+    private MemberMapper memberMapper;
 
     public Member findBy(Long id) {
         return memberRepository.findById(id).get();
@@ -39,5 +44,9 @@ public class MemberService {
 
     public Member save(Member member) {
         return memberRepository.save(member);
+    }
+
+    public List<Member> getAll(){
+        return memberMapper.getAll();
     }
 }
