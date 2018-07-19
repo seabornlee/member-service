@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 @AutoConfigureAfter(MybatisConfig.class)
 public class MybatisMapperScannerConfig implements EnvironmentAware {
 
+    private final static String PLACE_HOLDER = "${mybatis.mapperScanPackage}";
     private String mapperScanPackage;
 
     @Bean
@@ -24,6 +25,6 @@ public class MybatisMapperScannerConfig implements EnvironmentAware {
 
     @Override
     public void setEnvironment(Environment environment) {
-        this.mapperScanPackage = environment.resolvePlaceholders("${mybatis.mapperScanPackage}");
+        this.mapperScanPackage = environment.resolvePlaceholders(PLACE_HOLDER);
     }
 }
