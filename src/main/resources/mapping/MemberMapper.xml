@@ -65,7 +65,7 @@
     from member
   </select>
 
-	<select id="getAutoAskQuestion" resultType="Member">
+	<select id="getAll" resultType="Member">
 		SELECT * FROM member
 	</select>
 	

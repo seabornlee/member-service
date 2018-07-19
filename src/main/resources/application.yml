@@ -48,3 +48,7 @@ mybatis:
             pageSizeZero: true
 server:
     port: 8888
+
+logging:
+    level:
+        com.seabornlee.springboot.memberservice.mapper: debug
