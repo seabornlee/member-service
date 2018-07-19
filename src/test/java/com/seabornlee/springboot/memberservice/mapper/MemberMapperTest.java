@@ -1,5 +1,7 @@
 package com.seabornlee.springboot.memberservice.mapper;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.seabornlee.springboot.memberservice.domain.Member;
 import org.junit.After;
 import org.junit.Before;
@@ -29,6 +31,15 @@ public class MemberMapperTest {
     @Test
     public void getAll() {
         List<Member> list = memberMapper.getAll();
-        //assertTrue(null==list);
+        System.out.println(list);
+    }
+
+    @Test
+    public void test_get_by_page(){
+        PageHelper.startPage(1, 10,true);
+
+        PageInfo<Member> pageInfo = new PageInfo<>(memberMapper.getAll());
+
+        System.out.println(pageInfo);
     }
 }

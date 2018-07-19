@@ -39,5 +39,12 @@ mybatis:
      typeAliasesPackage: com.seabornlee.springboot.memberservice.domain
      mapperScanPackage: com.seabornlee.springboot.memberservice.mapper
      configLocation: classpath:mybatis_config.xml
+     #page helper
+     pagehelper:
+        properties:
+            offsetAsPageNum: true
+            rowBoundsWithCount: true
+            reasonable: true
+            pageSizeZero: true
 server:
     port: 8888
