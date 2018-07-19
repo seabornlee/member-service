@@ -63,4 +63,8 @@ public class MemberService {
 
         return pageInfo;
     }
+
+    public List<Member> selectAll(){
+        return memberMapper.selectAll();
+    }
 }

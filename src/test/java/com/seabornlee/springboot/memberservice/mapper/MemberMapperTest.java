@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -16,6 +18,8 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 public class MemberMapperTest {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Mock
     private MemberMapper memberMapper;
@@ -31,7 +35,7 @@ public class MemberMapperTest {
     @Test
     public void getAll() {
         List<Member> list = memberMapper.getAll();
-        System.out.println(list);
+        logger.debug(list.toString());
     }
 
     @Test
@@ -40,6 +44,14 @@ public class MemberMapperTest {
 
         PageInfo<Member> pageInfo = new PageInfo<>(memberMapper.getAll());
 
-        System.out.println(pageInfo);
+        logger.debug(pageInfo.toString());
+    }
+
+    @Test
+    public void test_common_mapper(){
+
+        List<Member> list = memberMapper.getAll();
+
+        logger.debug(list.toString());
     }
 }

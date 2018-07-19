@@ -47,10 +47,8 @@ mybatis:
             reasonable: true
             pageSizeZero: true
 #通用mapper
-mapper:
-    mappers: com.seabornlee.springboot.memberservice.mapper
-    mapper:
-        identity: MYSQL
+
+
 server:
     port: 8888
 

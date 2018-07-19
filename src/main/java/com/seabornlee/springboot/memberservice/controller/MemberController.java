@@ -42,6 +42,6 @@ public class MemberController {
     @GetMapping(value = "/list")
     @ResponseBody
     public ResponseEntity list(){
-        return new ResponseEntity(memberService.getByPage(1,10),HttpStatus.OK);
+        return new ResponseEntity(memberService.selectAll(),HttpStatus.OK);
     }
 }
