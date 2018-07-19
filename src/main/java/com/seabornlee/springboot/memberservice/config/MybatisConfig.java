@@ -71,10 +71,10 @@ public class MybatisConfig implements TransactionManagementConfigurer {
             return sessionFactoryBean.getObject();
         } catch (IOException e) {
             logger.error("mybatis resolver mapper*xml is error",e);
-            return null;
+            throw new RuntimeException(e);
         } catch (Exception e) {
             logger.error("mybatis sqlSessionFactoryBean create error",e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
