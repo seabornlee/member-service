@@ -7,8 +7,8 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class HttpGetClient {
 
-    private Logger logger = LogManager.getLogger(HttpGetClient.class);
+    private Logger logger = LoggerFactory.getLogger(HttpGetClient.class);
     private String url;
     private int status = 0;
     private String content;

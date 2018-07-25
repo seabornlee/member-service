@@ -1,6 +1,6 @@
 package com.seabornlee.springboot.memberservice.util.httpclient;
 
-import com.netease.product.util.json.FastjsonUtil;
+import com.alibaba.fastjson.JSON;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -11,8 +11,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class HttpPostClient {
 
-    private Logger logger = LogManager.getLogger(HttpPostClient.class);
+    private Logger logger = LoggerFactory.getLogger(HttpPostClient.class);
     private String url;
     private int status = 0;
     private String content;
@@ -113,7 +113,7 @@ public class HttpPostClient {
                     HttpEntity entity = response.getEntity();
                     return entity != null ? EntityUtils.toString(entity, encoding) : null;
                 } else {
-                    logger.debug("An error occurred,request url:"+url+"\n request body:"+ FastjsonUtil.toJSONString(nvps));
+                    logger.debug("An error occurred,request url:"+url+"\n request body:"+ JSON.toJSONString(nvps));
                     throw new ClientProtocolException("Unexpected response status: " + status);
                 }
             }
@@ -123,7 +123,7 @@ public class HttpPostClient {
         try {
             content = httpClient.execute(httpPost, responseHandler);
         } catch (IOException e) {
-            logger.debug("An error occurred,request url:"+url+"\n request body:"+ FastjsonUtil.toJSONString(nvps));
+            logger.debug("An error occurred,request url:"+url+"\n request body:"+ JSON.toJSONString(nvps));
             e.printStackTrace();
             return false;
         }

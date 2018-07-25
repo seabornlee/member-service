@@ -128,4 +128,8 @@ public class HttpClientSingletonFactory {
         return HttpClientHolder.getClient();
     }
 
+    public static CloseableHttpClient getHttpsClient(){
+        return HttpClientHolder.getHttpClientBuilder().setSSLContext().setSSLHostnameVerifier();
+    }
+
 }
