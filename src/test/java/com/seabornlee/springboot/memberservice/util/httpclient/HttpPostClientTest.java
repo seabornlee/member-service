@@ -1,5 +1,7 @@
 package com.seabornlee.springboot.memberservice.util.httpclient;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -24,14 +26,20 @@ public class HttpPostClientTest {
         System.out.println(content);
         System.out.println("------------");
 
-        String redirect = content.replaceAll("@@@","?JSESSIONID=");
+        JSONObject result = JSON.parseObject(content);
 
-        HttpGetClient getClient = new HttpGetClient(redirect);
+        String redirect = result.getString("data");
+        redirect = redirect.replaceAll("@@@","?JSESSIONID=");
+        redirect = redirect.replaceAll("successfulUrl=/","successfulUrl=%2f");
+
+        System.out.println(redirect);
+
+        HttpGetClient getClient = new HttpGetClient(redirect,true);
         getClient.doGet();
         System.out.println(getClient.getContent());
         System.out.println("------------");
 
-        getClient = new HttpGetClient("https://hz1.ejlerp.com/skuQuery/list");
+        getClient = new HttpGetClient("https://hz1.ejlerp.com/warehouse/list",true);
         getClient.doGet();
         System.out.println(getClient.getContent());
     }

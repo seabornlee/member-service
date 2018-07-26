@@ -34,13 +34,16 @@ public class HttpPostClient {
     private HashMap<String,String> headers = new HashMap<String,String>();
 
     public HttpPostClient(String url){
-        this.url = url;
-        httpClient = HttpClientSingletonFactory.getHttpClient();
+        this(url,null,false);
     }
 
     public HttpPostClient(String url, HashMap<String,String> params){
+        this(url, params, false);
+    }
+
+    public HttpPostClient(String url, HashMap<String,String> params, boolean ssl){
         this.url = url;
-        httpClient = HttpClientSingletonFactory.getHttpClient();
+        httpClient = ssl?HttpClientSingletonFactory.getHttpsClient():HttpClientSingletonFactory.getHttpClient();
         if(null!=params){
             this.params.putAll(params);
         }

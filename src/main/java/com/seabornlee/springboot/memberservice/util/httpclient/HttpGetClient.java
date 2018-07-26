@@ -24,8 +24,12 @@ public class HttpGetClient {
     private CloseableHttpClient httpClient = null;
 
     public HttpGetClient(String url){
+        this(url,false);
+    }
+
+    public HttpGetClient(String url, boolean ssl){
         this.url = url;
-        httpClient = HttpClientSingletonFactory.getHttpClient();
+        httpClient = ssl?HttpClientSingletonFactory.getHttpsClient():HttpClientSingletonFactory.getHttpClient();
     }
 
     public int getStatus(){

@@ -1,6 +1,5 @@
 package com.seabornlee.springboot.memberservice.config;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +73,7 @@ public class TxInterceptorConfig {
     @Bean
     public Advisor txAdviceAdvisor(TransactionInterceptor txAdvice) {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression(StringUtils.isBlank(aopPointcutExpression)?AOP_POINTCUT_EXPRESSION:aopPointcutExpression);
+        pointcut.setExpression(StringUtils.isEmpty(aopPointcutExpression)?AOP_POINTCUT_EXPRESSION:aopPointcutExpression);
         return new DefaultPointcutAdvisor(pointcut, txAdvice);
     }
 }
