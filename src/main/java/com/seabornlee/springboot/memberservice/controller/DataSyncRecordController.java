@@ -3,6 +3,9 @@ package com.seabornlee.springboot.memberservice.controller;
 import com.github.pagehelper.PageInfo;
 import com.seabornlee.springboot.memberservice.domain.DataSyncRecord;
 import com.seabornlee.springboot.memberservice.service.IDataSyncRecordService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,10 @@ public class DataSyncRecordController {
     @Autowired
     private IDataSyncRecordService dataSyncRecordService;
 
+    @ApiOperation(value = "数据同步记录列表",notes = "分页获取数据同步记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = false, paramType = "query")
+    })
     @GetMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public ResponseEntity listRecord(@RequestParam(required = false) Integer page,
