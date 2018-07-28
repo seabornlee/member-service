@@ -26,6 +26,17 @@ public class DataSyncRecordServiceImpl implements IDataSyncRecordService {
     }
 
     @Override
+    public PageInfo<DataSyncRecord> getListByPage(DataSyncRecord record, int page, int size) {
+        page = page>0?page:1;
+        size = size>0?size:10;
+        PageHelper.startPage(page, size,true);
+
+        PageInfo<DataSyncRecord> pageInfo = new PageInfo<>(dataSyncRecordMapper.selectByExample(record));
+
+        return pageInfo;
+    }
+
+    @Override
     public void saveRecord(DataSyncRecord record) {
 
         dataSyncRecordMapper.insert(record);

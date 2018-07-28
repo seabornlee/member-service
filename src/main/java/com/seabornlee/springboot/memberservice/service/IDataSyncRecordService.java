@@ -7,6 +7,8 @@ public interface IDataSyncRecordService {
 
     public PageInfo<DataSyncRecord> getListByPage(int page, int size);
 
+    public PageInfo<DataSyncRecord> getListByPage(DataSyncRecord record, int page, int size);
+
     public void saveRecord(DataSyncRecord record);
 
     public void updateRecord(DataSyncRecord record);
