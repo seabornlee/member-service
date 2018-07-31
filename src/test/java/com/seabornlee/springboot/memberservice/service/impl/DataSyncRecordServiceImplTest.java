@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 public class DataSyncRecordServiceImplTest {
@@ -29,5 +29,6 @@ public class DataSyncRecordServiceImplTest {
 
         logger.info(JSON.toJSONString(page));
 
+        assertThat(page).isNull();
     }
 }

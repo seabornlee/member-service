@@ -3,12 +3,16 @@ package com.seabornlee.springboot.memberservice.util.httpclient;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 public class HttpPostClientTest {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Test
     public void doPost() throws IOException {
@@ -23,8 +27,10 @@ public class HttpPostClientTest {
 
         String content = postClient.getContent();
 
-        System.out.println(content);
-        System.out.println("------------");
+        assertTrue(null!=content);
+
+        logger.info(content);
+        logger.info("------------");
 
         JSONObject result = JSON.parseObject(content);
 
@@ -32,15 +38,19 @@ public class HttpPostClientTest {
         redirect = redirect.replaceAll("@@@","?JSESSIONID=");
         redirect = redirect.replaceAll("successfulUrl=/","successfulUrl=%2f");
 
-        System.out.println(redirect);
+        logger.info(redirect);
 
         HttpGetClient getClient = new HttpGetClient(redirect,true);
         getClient.doGet();
-        System.out.println(getClient.getContent());
-        System.out.println("------------");
+        content = getClient.getContent();
+        assertTrue(null!=content);
+        logger.info(content);
+        logger.info("------------");
 
         getClient = new HttpGetClient("https://hz1.ejlerp.com/warehouse/list",true);
         getClient.doGet();
-        System.out.println(getClient.getContent());
+        content = getClient.getContent();
+        assertTrue(null!=content);
+        logger.info(content);
     }
 }

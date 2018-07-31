@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 public class DataSyncRecordMapperTest {
 
@@ -27,5 +27,6 @@ public class DataSyncRecordMapperTest {
 
         logger.info("list size: " + (list==null?0:list.size()));
 
+        assertThat(list).isNull();
     }
 }

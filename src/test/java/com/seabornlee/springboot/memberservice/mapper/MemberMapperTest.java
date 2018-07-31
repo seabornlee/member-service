@@ -14,7 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 public class MemberMapperTest {
@@ -36,6 +37,7 @@ public class MemberMapperTest {
     public void getAll() {
         List<Member> list = memberMapper.getAll();
         logger.debug(list.toString());
+        assertThat(list).isNotEmpty();
     }
 
     @Test
@@ -45,6 +47,8 @@ public class MemberMapperTest {
         PageInfo<Member> pageInfo = new PageInfo<>(memberMapper.getAll());
 
         logger.debug(pageInfo.toString());
+
+        assertThat(pageInfo).isNotNull();
     }
 
     @Test
@@ -53,5 +57,6 @@ public class MemberMapperTest {
         List<Member> list = memberMapper.getAll();
 
         logger.debug(list.toString());
+        assertThat(list).isNotNull();
     }
 }
