@@ -15,7 +15,7 @@ public enum DataSyncStatus {
         return value;
     }
 
-    public DataSyncStatus valueOf(int value){
+    public static DataSyncStatus valueOf(int value){
         for(DataSyncStatus status : DataSyncStatus.values()){
             if(value == status.getValue()){
                 return status;

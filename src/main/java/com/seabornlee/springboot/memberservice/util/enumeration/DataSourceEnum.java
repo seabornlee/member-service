@@ -13,7 +13,7 @@ public enum DataSourceEnum {
         return value;
     }
 
-    public DataSourceEnum valueOf(int value){
+    public static DataSourceEnum valueOf(int value){
         DataSourceEnum[] enums = DataSourceEnum.values();
         for(DataSourceEnum dataSourceEnum : enums){
             if(dataSourceEnum.getValue() == value){

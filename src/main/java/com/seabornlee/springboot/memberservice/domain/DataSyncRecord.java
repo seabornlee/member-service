@@ -1,5 +1,9 @@
 package com.seabornlee.springboot.memberservice.domain;
 
+import com.seabornlee.springboot.memberservice.util.enumeration.DataSourceEnum;
+import com.seabornlee.springboot.memberservice.util.enumeration.DataSyncStatus;
+import io.swagger.models.auth.In;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +15,7 @@ public class DataSyncRecord {
     private Integer id;
 
     @Column(name = "data_source")
-    private String dataSource;
+    private DataSourceEnum dataSource;
 
     @Column(name = "url")
     private String url;
@@ -31,7 +35,7 @@ public class DataSyncRecord {
     @Column(name = "is_success")
     private Boolean isSuccess;
 
-    private Integer status;//任务执行状态
+    private DataSyncStatus status;//任务执行状态
 
     public Integer getId() {
         return id;
@@ -42,12 +46,12 @@ public class DataSyncRecord {
         return this;
     }
 
-    public String getDataSource() {
-        return dataSource;
+    public int getDataSource() {
+        return dataSource.getValue();
     }
 
-    public DataSyncRecord setDataSource(String dataSource) {
-        this.dataSource = dataSource;
+    public DataSyncRecord setDataSource(int dataSource) {
+        this.dataSource = DataSourceEnum.valueOf(dataSource);
         return this;
     }
 
@@ -106,11 +110,11 @@ public class DataSyncRecord {
     }
 
     public Integer getStatus() {
-        return status;
+        return status.getValue();
     }
 
     public DataSyncRecord setStatus(Integer status) {
-        this.status = status;
+        this.status = DataSyncStatus.valueOf(status);
         return this;
     }
 }
