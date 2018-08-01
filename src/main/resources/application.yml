@@ -1,4 +1,3 @@
-
 spring:
     transaction:
         aopPointcutExpression: "execution (* com.seabornlee.springboot.memberservice.service..*.*(..))"
@@ -55,3 +54,10 @@ server:
 logging:
     level:
         com.seabornlee.springboot.memberservice.mapper: debug
+
+#线程池配置
+thread:
+    pool:
+        corePoolSize: 10
+        maxPoolSize: 20
+        keepAliveSeconds: 300
