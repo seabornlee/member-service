@@ -38,6 +38,22 @@ public class WarehouseServiceImpl implements IWarehouseService {
     }
 
     @Override
+    public void saveOrUpdate(Warehouse warehouse) {
+        Warehouse query = new Warehouse();
+        query.setWarehouseNo(warehouse.getWarehouseNo())
+                .setDataSource(warehouse.getDataSource())
+                .setTenantId(warehouse.getTenantId());
+
+        if(existWarehouse(query)){
+            if(null!=warehouse.getId()){
+                updateWarehouse(warehouse);
+            }
+        }else {
+            saveWarehouse(warehouse);
+        }
+    }
+
+    @Override
     public void updateWarehouse(Warehouse warehouse) {
         warehouseMapper.updateByPrimaryKey(warehouse);
     }

@@ -38,6 +38,23 @@ public class SKUServiceImpl implements ISKUService {
     }
 
     @Override
+    public void saveOrUpdate(SKU sku) {
+
+        SKU query = new SKU();
+        query.setSkuNo(sku.getSkuNo()).setTenantId(sku.getTenantId()).setDataSource(sku.getDataSource());
+
+        if(existSKU(query)){
+            if(null!=sku.getId()){
+                updateSKU(sku);
+            }
+
+        }else if(!existSKU(query)){
+            saveSKU(sku);
+        }
+
+    }
+
+    @Override
     public void updateSKU(SKU sku) {
         skuMapper.updateByPrimaryKey(sku);
     }

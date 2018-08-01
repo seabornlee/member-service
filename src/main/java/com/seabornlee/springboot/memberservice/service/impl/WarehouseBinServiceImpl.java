@@ -39,6 +39,22 @@ public class WarehouseBinServiceImpl implements IWarehouseBinService {
     }
 
     @Override
+    public void saveOrUpdate(WarehouseBin warehouseBin) {
+        WarehouseBin query = new WarehouseBin();
+        query.setBinNo(warehouseBin.getBinNo())
+                .setDataSource(warehouseBin.getDataSource())
+                .setWarehouseId(warehouseBin.getWarehouseId());
+        if(existWarehouseBin(query)){
+            if(null!=warehouseBin.getId()){
+                updateWarehouseBin(warehouseBin);
+            }
+        }else {
+            saveWarehouseBin(warehouseBin);
+        }
+
+    }
+
+    @Override
     public void updateWarehouseBin(WarehouseBin warehouseBin) {
         warehouseBinMapper.updateByPrimaryKey(warehouseBin);
     }

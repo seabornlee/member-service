@@ -11,6 +11,8 @@ public interface IWarehouseBinService {
 
     public void saveWarehouseBin(WarehouseBin warehouseBin);
 
+    public void saveOrUpdate(WarehouseBin warehouseBin);
+
     public void updateWarehouseBin(WarehouseBin warehouseBin);
 
     public void deleteWarehouseBin(WarehouseBin warehouseBin);

@@ -11,6 +11,8 @@ public interface IWarehouseService {
 
     public void saveWarehouse(Warehouse warehouse);
 
+    public void saveOrUpdate(Warehouse warehouse);
+
     public void updateWarehouse(Warehouse warehouse);
 
     public void deleteWarehouse(Warehouse warehouse);

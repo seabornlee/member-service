@@ -11,6 +11,8 @@ public interface ISKUService {
 
     public void saveSKU(SKU sku);
 
+    public void saveOrUpdate(SKU sku);
+
     public void updateSKU(SKU sku);
 
     public void deleteSKU(SKU sku);
