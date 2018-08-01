@@ -31,6 +31,8 @@ public class DataSyncRecord {
     @Column(name = "is_success")
     private Boolean isSuccess;
 
+    private Integer status;//任务执行状态
+
     public Integer getId() {
         return id;
     }
@@ -100,6 +102,15 @@ public class DataSyncRecord {
 
     public DataSyncRecord setSuccess(Boolean success) {
         isSuccess = success;
+        return this;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public DataSyncRecord setStatus(Integer status) {
+        this.status = status;
         return this;
     }
 }

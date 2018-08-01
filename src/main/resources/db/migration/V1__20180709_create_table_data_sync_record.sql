@@ -8,5 +8,6 @@ CREATE TABLE `data_sync_record` (
 `operator` varchar(255) NULL COMMENT '操作员',
 `op_time` long NULL COMMENT '操作时间',
 `is_success` boolean NULL COMMENT '是否成功',
+`status` int 0 COMMENT '任务执行状态:0 已经提交; 1 执行中; 2 完成',
 PRIMARY KEY (`id`)
 ); ENGINE=InnoDB DEFAULT CHARSET=utf8;
