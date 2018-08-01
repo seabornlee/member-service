@@ -61,7 +61,7 @@ public class ESpiritSpider implements Spider{
 
 
     @Override
-    public Object getData(String url, HashMap<String, String> params, boolean isPost, boolean isHttps) {
+    public Object getData(String url, Map<String, String> params, boolean isPost, boolean isHttps) {
 
         try {
             login();
@@ -74,7 +74,7 @@ public class ESpiritSpider implements Spider{
 
         if(isPost){//
 
-            HttpPostClient postClient = new HttpPostClient(url, params, true);
+            HttpPostClient postClient = new HttpPostClient(url, new HashMap<>(params), true);
 
             try {
                 postClient.doPost();
@@ -104,7 +104,7 @@ public class ESpiritSpider implements Spider{
         return null;
     }
 
-    private String processGetUrl(String url, HashMap<String,String> params){
+    private String processGetUrl(String url, Map<String,String> params){
 
         if(null==params||params.isEmpty()){
             return url;

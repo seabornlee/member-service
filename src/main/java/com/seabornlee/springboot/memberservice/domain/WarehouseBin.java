@@ -39,7 +39,9 @@ public class WarehouseBin {
     @Column(name = "warehouse_id")
     private Integer warehouseId;
 
-    public Integer getId() {
+    private Integer capacity;
+
+   public Integer getId() {
         return id;
     }
 
@@ -126,6 +128,15 @@ public class WarehouseBin {
 
     public WarehouseBin setWarehouseId(Integer warehouseId) {
         this.warehouseId = warehouseId;
+        return this;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public WarehouseBin setCapacity(Integer capacity) {
+        this.capacity = capacity;
         return this;
     }
 }
