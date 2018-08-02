@@ -23,12 +23,12 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
     protected IDataSyncRecordService dataSyncRecordService;
 
     @Override
-    public void sync(HttpServletRequest request, DataType type) {
-        sync(request, type, null, null);
+    public DataSyncRecord sync(HttpServletRequest request, DataType type) {
+        return sync(request, type, null, null);
     }
 
     @Override
-    public void sync(HttpServletRequest request, DataType type, Date start, Date end) {
+    public DataSyncRecord sync(HttpServletRequest request, DataType type, Date start, Date end) {
 
         //
         final DataSyncRecord record = makeRecord(request,type);
@@ -62,6 +62,8 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
 
             }
         });
+
+        return record;
 
     }
 
