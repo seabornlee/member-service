@@ -9,6 +9,8 @@ import com.seabornlee.springboot.memberservice.service.IWarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WarehouseServiceImpl implements IWarehouseService {
 
@@ -20,15 +22,15 @@ public class WarehouseServiceImpl implements IWarehouseService {
         page = page>0?page:1;
         size = size>0?size:10;
         PageHelper.startPage(page, size,true);
-
-        PageInfo<Warehouse> pageInfo = new PageInfo<>(warehouseMapper.selectByExample(query));
+        List<Warehouse> list = null==query?warehouseMapper.selectAll():warehouseMapper.select(query);
+        PageInfo<Warehouse> pageInfo = new PageInfo<>(list);
 
         return pageInfo;
     }
 
     @Override
     public boolean existWarehouse(Warehouse warehouse) {
-        Warehouse warehouseFromDb = warehouseMapper.selectOneByExample(warehouse);
+        Warehouse warehouseFromDb = warehouseMapper.selectOne(warehouse);
         return null!=warehouseFromDb;
     }
 
@@ -55,7 +57,7 @@ public class WarehouseServiceImpl implements IWarehouseService {
 
     @Override
     public void updateWarehouse(Warehouse warehouse) {
-        warehouseMapper.updateByPrimaryKey(warehouse);
+        warehouseMapper.updateByPrimaryKeySelective(warehouse);
     }
 
     @Override

@@ -8,6 +8,9 @@ import com.seabornlee.springboot.memberservice.mapper.SKUMapper;
 import com.seabornlee.springboot.memberservice.service.ISKUService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 @Service
 public class SKUServiceImpl implements ISKUService {
@@ -21,14 +24,15 @@ public class SKUServiceImpl implements ISKUService {
         size = size>0?size:10;
         PageHelper.startPage(page, size,true);
 
-        PageInfo<SKU> pageInfo = new PageInfo<>(skuMapper.selectByExample(query));
+        List<SKU> list = null==query?skuMapper.selectAll():skuMapper.select(query);
+        PageInfo<SKU> pageInfo = new PageInfo<>(list);
 
         return pageInfo;
     }
 
     @Override
     public boolean existSKU(SKU sku) {
-        SKU skuFromDb = skuMapper.selectOneByExample(sku);
+        SKU skuFromDb = skuMapper.selectOne(sku);
         return null!=skuFromDb;
     }
 
@@ -56,7 +60,7 @@ public class SKUServiceImpl implements ISKUService {
 
     @Override
     public void updateSKU(SKU sku) {
-        skuMapper.updateByPrimaryKey(sku);
+        skuMapper.updateByPrimaryKeySelective(sku);
     }
 
     @Override

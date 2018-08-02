@@ -8,6 +8,8 @@ import com.seabornlee.springboot.memberservice.service.IDataSyncRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DataSyncRecordServiceImpl implements IDataSyncRecordService {
 
@@ -30,8 +32,8 @@ public class DataSyncRecordServiceImpl implements IDataSyncRecordService {
         page = page>0?page:1;
         size = size>0?size:10;
         PageHelper.startPage(page, size,true);
-
-        PageInfo<DataSyncRecord> pageInfo = new PageInfo<>(dataSyncRecordMapper.selectByExample(record));
+        List<DataSyncRecord> list = null==record?dataSyncRecordMapper.selectAll():dataSyncRecordMapper.select(record);
+        PageInfo<DataSyncRecord> pageInfo = new PageInfo<>(list);
 
         return pageInfo;
     }
@@ -45,12 +47,12 @@ public class DataSyncRecordServiceImpl implements IDataSyncRecordService {
     @Override
     public void updateRecord(DataSyncRecord record) {
 
-        dataSyncRecordMapper.updateByPrimaryKey(record);
+        dataSyncRecordMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public void deleteRecord(DataSyncRecord record) {
 
-        dataSyncRecordMapper.delete(record);
+        dataSyncRecordMapper.deleteByPrimaryKey(record);
     }
 }

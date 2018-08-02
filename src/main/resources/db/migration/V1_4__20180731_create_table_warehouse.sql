@@ -13,5 +13,5 @@ CREATE TABLE `warehouse` (
 `address` varchar(255) NULL COMMENT '详细地址',
 `tenant_id` int(11) NULL COMMENT '租户id',
 `data_source` int NULL DEFAULT 1 COMMENT '数据来源： 1 e精灵',
-PRIMARY KEY (`id`) ,
+PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

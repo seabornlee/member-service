@@ -11,4 +11,4 @@ CREATE TABLE `data_sync_record` (
 `status` int NULL default 0 COMMENT '任务执行状态:0 已经提交; 1 执行中; 2 完成',
 `data_type` int NULL COMMENT '数据表:0 sku; 1 warehouse_bin; 2 warehouse',
 PRIMARY KEY (`id`)
-); ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
