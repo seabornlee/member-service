@@ -3,6 +3,7 @@ package com.seabornlee.springboot.memberservice.domain;
 import com.seabornlee.springboot.memberservice.util.enumeration.DataSourceEnum;
 import com.seabornlee.springboot.memberservice.util.enumeration.DataSyncStatus;
 import io.swagger.models.auth.In;
+import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
 
 public class DataSyncRecord {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @KeySql(useGeneratedKeys = true)
     private Integer id;
 
     @Column(name = "data_source")

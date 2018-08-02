@@ -76,7 +76,7 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
         record.setStatus(DataSyncStatus.SUBMITTED.getValue());
         record.setUrl(request.getRequestURL().toString());
         record.setSuccess(false);
-        record.setOperator(request.getSession().getAttribute("").toString());
+        //record.setOperator(request.getSession().getAttribute(Constants.SESSION_USER_NAME_KEY).toString());
 
         return record;
     }
