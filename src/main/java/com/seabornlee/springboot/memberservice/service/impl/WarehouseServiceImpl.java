@@ -47,6 +47,8 @@ public class WarehouseServiceImpl implements IWarehouseService {
                 .setTenantId(warehouse.getTenantId());
 
         if(existWarehouse(query)){
+            Warehouse warehouseFromDb = warehouseMapper.selectOne(query);
+            warehouse.setId(warehouseFromDb.getId());
             if(null!=warehouse.getId()){
                 updateWarehouse(warehouse);
             }

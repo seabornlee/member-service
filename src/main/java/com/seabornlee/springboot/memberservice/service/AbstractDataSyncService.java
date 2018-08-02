@@ -57,6 +57,7 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
                     r.setSuccess(false);
                     r.setStatus(DataSyncStatus.COMPLETED.getValue());
                     dataSyncRecordService.updateRecord(r);
+                    e.printStackTrace();
                     throw e;
                 }
 

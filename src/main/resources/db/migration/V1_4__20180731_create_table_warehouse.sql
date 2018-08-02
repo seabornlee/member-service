@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `warehouse`;
 CREATE TABLE `warehouse` (
-`id` int UNSIGNED NULL AUTO_INCREMENT,
+`id` int UNSIGNED NOT NULL AUTO_INCREMENT,
 `warehouse_no` varchar(50) NULL COMMENT '仓库编号',
 `name` varchar(50) NULL COMMENT '名称',
 `type` varchar(50) NULL,

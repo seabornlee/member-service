@@ -47,6 +47,8 @@ public class WarehouseBinServiceImpl implements IWarehouseBinService {
                 .setDataSource(warehouseBin.getDataSource())
                 .setWarehouseId(warehouseBin.getWarehouseId());
         if(existWarehouseBin(query)){
+            WarehouseBin binFromDb = warehouseBinMapper.selectOne(query);
+            warehouseBin.setId(binFromDb.getId());
             if(null!=warehouseBin.getId()){
                 updateWarehouseBin(warehouseBin);
             }

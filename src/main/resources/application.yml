@@ -2,13 +2,13 @@ spring:
     transaction:
         aopPointcutExpression: "execution (* com.seabornlee.springboot.memberservice.service..*.*(..))"
         txAdviceMap:
-            save: "PROPAGATION_REQUIRED,-Exception,readOnly"
-            add: "PROPAGATION_REQUIRED,-Exception,readOnly"
-            insert: "PROPAGATION_REQUIRED,-Exception,readOnly"
-            update: "PROPAGATION_REQUIRED,-Exception,readOnly"
-            delete: "PROPAGATION_REQUIRED,-Exception,readOnly"
-            remove: "PROPAGATION_REQUIRED,-Exception,readOnly"
-            tx: "PROPAGATION_REQUIRED,-Exception,readOnly"
+            save: "PROPAGATION_REQUIRED,-Exception"
+            add: "PROPAGATION_REQUIRED,-Exception"
+            insert: "PROPAGATION_REQUIRED,-Exception"
+            update: "PROPAGATION_REQUIRED,-Exception"
+            delete: "PROPAGATION_REQUIRED,-Exception"
+            remove: "PROPAGATION_REQUIRED,-Exception"
+            tx: "PROPAGATION_REQUIRED,-Exception"
     datasource:
         name: db
         type: com.alibaba.druid.pool.DruidDataSource

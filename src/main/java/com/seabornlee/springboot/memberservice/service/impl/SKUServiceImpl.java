@@ -48,6 +48,8 @@ public class SKUServiceImpl implements ISKUService {
         query.setSkuNo(sku.getSkuNo()).setTenantId(sku.getTenantId()).setDataSource(sku.getDataSource());
 
         if(existSKU(query)){
+            SKU skuFromDb = skuMapper.selectOne(query);
+            sku.setId(skuFromDb.getId());
             if(null!=sku.getId()){
                 updateSKU(sku);
             }

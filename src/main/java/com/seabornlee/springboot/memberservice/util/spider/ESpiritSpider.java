@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * e精灵数据抓取
@@ -19,9 +22,12 @@ public class ESpiritSpider implements Spider{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final static Pattern domainPattern = Pattern.compile("^((http://)|(https://))?(?<domain>([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6})");
+
     private String username;
     private String password;
     private String loginUrl;
+    private final CopyOnWriteArrayList<String> loginDomains = new CopyOnWriteArrayList<String>();
 
     public ESpiritSpider(String username, String password, String loginUrl) {
         this.username = username;
@@ -29,7 +35,7 @@ public class ESpiritSpider implements Spider{
         this.loginUrl = loginUrl;
     }
 
-    protected void login() throws IOException {
+    protected String login(String domain) throws IOException {
 
         logger.info("logging into " + loginUrl);
         HttpPostClient postClient = new HttpPostClient(loginUrl);
@@ -56,18 +62,44 @@ public class ESpiritSpider implements Spider{
         HttpGetClient getClient = new HttpGetClient(redirect,true);
         getClient.doGet();
 
+        String old = getDomain(redirect);
+        String newDomain = getDomain(domain);
+        if(!newDomain.equals(old)){
+            String redirectUrl = redirect.replace(old,newDomain);
+            getClient = new HttpGetClient(redirectUrl,true);
+            getClient.doGet();
+        }
+
         logger.info("redirect successfully...");
+        return old;
+    }
+
+    public String getDomain(String url){
+
+        Matcher matcher = domainPattern.matcher(url);
+        if(matcher.find()){
+            return matcher.group("domain");
+        }
+        return null;
     }
 
 
     @Override
     public Object getData(String url, Map<String, String> params, boolean isPost, boolean isHttps) {
 
+        String domain = null;
         try {
-            login();
+            domain = login(url);
         } catch (IOException e) {
             logger.error("An error occurred when login",e);
             return null;
+        }
+
+        if(null!=domain){
+            String newDomain = getDomain(url);
+            if(!newDomain.equals(domain)){
+                url = url.replaceAll(newDomain,domain);
+            }
         }
 
         String content = null;

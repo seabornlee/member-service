@@ -23,7 +23,7 @@ import java.util.Map;
 @Service
 public class ESpiritDataSyncService extends AbstractDataSyncService {
 
-    private final String SKU_ALL_DATA_URL = "https://hz1.ejlerp.com/api/sku_match/list";
+    private final String SKU_ALL_DATA_URL = "https://hz3.ejlerp.com/skuQuery/list";
     private final String SKU_INCREMENT_DATA_URL = "https://hz1.ejlerp.com/skuQuery/quickFilter";
 
     private final String WAREHOUSE_BIN_ALL_DATA_URL = "https://hz1.ejlerp.com/warehouse_bin/list";
@@ -72,7 +72,7 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
         return DataSourceEnum.ESpirit;
     }
 
-    private Spider getSpider(){
+    private Spider doGetSpider(){
         return new ESpiritSpider(username,password,loginUrl);
     }
 
@@ -134,7 +134,7 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
 
         @Override
         protected Spider getSpider() {
-            return getSpider();
+            return doGetSpider();
         }
 
         @Override

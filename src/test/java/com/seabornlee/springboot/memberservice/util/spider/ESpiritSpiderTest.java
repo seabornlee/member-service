@@ -21,4 +21,12 @@ public class ESpiritSpiderTest {
 
         assertTrue(null!=data);
     }
+
+    @Test
+    public void testGetDomain(){
+        String url = "https://hz1.ejlerp.com/warehouse/list";
+        ESpiritSpider spider = new ESpiritSpider("potato","potato-plan","http://www.runscm.com/user_login");
+        String domain = spider.getDomain(url);
+        assertEquals("hz1.ejlerp.com",domain);
+    }
 }
