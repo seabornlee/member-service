@@ -2,9 +2,11 @@ package com.seabornlee.springboot.memberservice.controller;
 
 import com.seabornlee.springboot.memberservice.domain.WarehouseBin;
 import com.seabornlee.springboot.memberservice.service.IWarehouseBinService;
+import com.seabornlee.springboot.memberservice.util.Constants;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +31,11 @@ public class WarehouseBinController {
     })
     @GetMapping(value = "/list", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getWarehouseBinList(@RequestParam(required = false) int page,
-                                              @RequestParam(required = false) int size){
+    public ResponseEntity getWarehouseBinList(@RequestParam(required = false) Integer page,
+                                              @RequestParam(required = false) Integer size){
 
-        page = page<1?1:page;
-        size = size<1?10:size;
+        page = null==page||page<=0?1:page;
+        size = null==size||size<=0? Constants.DEFAULT_PAGE_SIZE :size;
 
         return new ResponseEntity(warehouseBinService.getListByPage(new WarehouseBin(),page,size), HttpStatus.OK);
     }

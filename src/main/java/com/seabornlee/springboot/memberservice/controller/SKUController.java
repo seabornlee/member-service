@@ -2,6 +2,7 @@ package com.seabornlee.springboot.memberservice.controller;
 
 import com.seabornlee.springboot.memberservice.domain.SKU;
 import com.seabornlee.springboot.memberservice.service.ISKUService;
+import com.seabornlee.springboot.memberservice.util.Constants;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +33,7 @@ public class SKUController {
     public ResponseEntity getSKUList(@RequestParam(required = false) Integer page,
                                      @RequestParam(required = false) Integer size){
         page = null==page||page<1?1:page;
-        size = null==size||size<1?10:size;
+        size = null==size||size<1? Constants.DEFAULT_PAGE_SIZE:size;
 
         return new ResponseEntity(skuService.getListByPage(new SKU(),page,size), HttpStatus.OK);
     }

@@ -30,7 +30,7 @@ public class DataSyncRecord {
     private String operator;
 
     @Column(name = "op_time")
-    private long opTime;
+    private Long opTime;
 
     @Column(name = "is_success")
     private Boolean isSuccess;
@@ -46,7 +46,7 @@ public class DataSyncRecord {
         return this;
     }
 
-    public int getDataSource() {
+    public Integer getDataSource() {
         return dataSource.getValue();
     }
 
@@ -91,11 +91,11 @@ public class DataSyncRecord {
         return this;
     }
 
-    public long getOpTime() {
+    public Long getOpTime() {
         return opTime;
     }
 
-    public DataSyncRecord setOpTime(long opTime) {
+    public DataSyncRecord setOpTime(Long opTime) {
         this.opTime = opTime;
         return this;
     }

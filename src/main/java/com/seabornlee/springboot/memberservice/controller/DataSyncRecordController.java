@@ -3,6 +3,7 @@ package com.seabornlee.springboot.memberservice.controller;
 import com.github.pagehelper.PageInfo;
 import com.seabornlee.springboot.memberservice.domain.DataSyncRecord;
 import com.seabornlee.springboot.memberservice.service.IDataSyncRecordService;
+import com.seabornlee.springboot.memberservice.util.Constants;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/dataSyncRecord")
 public class DataSyncRecordController {
 
-    private final static int DEFAULT_PAGE_SIZE = 20;
+    private final static int DEFAULT_PAGE_SIZE = Constants.DEFAULT_PAGE_SIZE;
 
     @Autowired
     private IDataSyncRecordService dataSyncRecordService;

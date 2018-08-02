@@ -10,7 +10,7 @@ CREATE TABLE `warehouse_bin` (
 `is_enabled` boolean NULL DEFAULT false COMMENT '是否禁用',
 `data_source` int NULL DEFAULT 1 COMMENT '数据来源： 1 e精灵',
 `warehouse_id` int NULL COMMENT '仓库id',
-`capcity` int NULL COMMENT '容量',
+`capacity` int NULL COMMENT '容量',
 PRIMARY KEY (`id`) ,
 INDEX `warehouse_bin_no_idx` (`bin_no` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
