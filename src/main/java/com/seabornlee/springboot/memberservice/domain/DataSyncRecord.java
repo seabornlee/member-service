@@ -16,7 +16,7 @@ public class DataSyncRecord {
     private Integer id;
 
     @Column(name = "data_source")
-    private DataSourceEnum dataSource;
+    private Integer dataSource;
 
     @Column(name = "url")
     private String url;
@@ -48,11 +48,11 @@ public class DataSyncRecord {
     }
 
     public Integer getDataSource() {
-        return dataSource.getValue();
+        return dataSource;
     }
 
     public DataSyncRecord setDataSource(int dataSource) {
-        this.dataSource = DataSourceEnum.valueOf(dataSource);
+        this.dataSource = dataSource;
         return this;
     }
 
