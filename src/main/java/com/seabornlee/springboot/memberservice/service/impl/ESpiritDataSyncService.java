@@ -26,7 +26,7 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
     private final String SKU_ALL_DATA_URL = "https://hz3.ejlerp.com/skuQuery/list";
     private final String SKU_INCREMENT_DATA_URL = "https://hz1.ejlerp.com/skuQuery/quickFilter";
 
-    private final String WAREHOUSE_BIN_ALL_DATA_URL = "https://hz1.ejlerp.com/warehouse_bin/list";
+    private final String WAREHOUSE_BIN_ALL_DATA_URL = "https://hz3.ejlerp.com/warehouse_bin/list";
     private final String WAREHOUSE_BIN_INCREMENT_DATA_URL = "https://hz1.ejlerp.com/warehouse_bin/querybyctgr";
 
     private String username = "potato";
@@ -175,13 +175,16 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
                 WarehouseBin bin = new WarehouseBin();
                 bin.setBinNo(one.getString("warehouse_bin_no"));
                 bin.setName(one.getString("warehouse_name"));
+                bin.setWarehouseNo(one.getString("warehouse_no"));
                 bin.setAreaName(one.getString("warehouse_area_name"));
                 bin.setAreaType(one.getString("warehouse_area_type"));
-                bin.setShelfNo(one.getString("warehouse_shelf_name"));
+                bin.setAreaNo(one.getString("warehouse_area_no"));
+                bin.setShelfNo(one.getString("warehouse_shelf_no"));
                 bin.setEnabled(one.getBoolean("is_enabled_code"));
                 bin.setTmp(one.getBoolean("is_tmp_code"));
                 bin.setDataSource(DataSourceEnum.ESpirit.getValue());
                 bin.setCapacity(one.getInteger("capacity"));
+                bin.setTenantId(one.getInteger("tenant_id"));
                 result.add(bin);
             }
             return result;

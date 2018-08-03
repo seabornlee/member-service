@@ -26,6 +26,8 @@ public class WarehouseBin {
     @Column(name = "area_name")
     private String areaName;
 
+    private String areaNo;
+
     @Column(name = "shelf_no")
     private String shelfNo;
 
@@ -41,7 +43,11 @@ public class WarehouseBin {
     @Column(name = "warehouse_id")
     private Integer warehouseId;
 
+    private String warehouseNo;
+
     private Integer capacity;
+
+    private Integer tenantId;
 
    public Integer getId() {
         return id;
@@ -139,6 +145,33 @@ public class WarehouseBin {
 
     public WarehouseBin setCapacity(Integer capacity) {
         this.capacity = capacity;
+        return this;
+    }
+
+    public String getAreaNo() {
+        return areaNo;
+    }
+
+    public WarehouseBin setAreaNo(String areaNo) {
+        this.areaNo = areaNo;
+        return this;
+    }
+
+    public String getWarehouseNo() {
+        return warehouseNo;
+    }
+
+    public WarehouseBin setWarehouseNo(String warehouseNo) {
+        this.warehouseNo = warehouseNo;
+        return this;
+    }
+
+    public Integer getTenantId() {
+        return tenantId;
+    }
+
+    public WarehouseBin setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
         return this;
     }
 }
