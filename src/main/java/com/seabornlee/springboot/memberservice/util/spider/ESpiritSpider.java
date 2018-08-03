@@ -16,9 +16,8 @@ import java.util.regex.Pattern;
 
 /**
  * e精灵数据抓取
- *
- * */
-public class ESpiritSpider implements Spider{
+ */
+public class ESpiritSpider implements Spider {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -39,11 +38,11 @@ public class ESpiritSpider implements Spider{
 
         logger.info("logging into " + loginUrl);
         HttpPostClient postClient = new HttpPostClient(loginUrl);
-        postClient.addParam("username",username);
-        postClient.addParam("password",password);
-        postClient.addParam("browserCode","chrome");
+        postClient.addParam("username", username);
+        postClient.addParam("password", password);
+        postClient.addParam("browserCode", "chrome");
 
-        postClient.setHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+        postClient.setHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 
         postClient.doPost();
 
@@ -54,45 +53,44 @@ public class ESpiritSpider implements Spider{
         JSONObject result = JSON.parseObject(content);
 
         String status = result.getString("status");
-        if("Successful".equalsIgnoreCase(status)){
+        if ("Successful".equalsIgnoreCase(status)) {
             String redirect = result.getString("data");
-            redirect = redirect.replaceAll("@@@","?JSESSIONID=");
-            redirect = redirect.replaceAll("successfulUrl=/","successfulUrl=%2f");
+            redirect = redirect.replaceAll("@@@", "?JSESSIONID=");
+            redirect = redirect.replaceAll("successfulUrl=/", "successfulUrl=%2f");
 
             logger.info("redirect to " + redirect);
 
-            HttpGetClient getClient = new HttpGetClient(redirect,true);
+            HttpGetClient getClient = new HttpGetClient(redirect, true);
             getClient.doGet();
 
             String old = getDomain(redirect);
             loginDomains.addIfAbsent(old);
             String newDomain = getDomain(domain);
             loginDomains.addIfAbsent(newDomain);
-            if(!newDomain.equals(old)){
-                String redirectUrl = redirect.replace(old,newDomain);
-                getClient = new HttpGetClient(redirectUrl,true);
+            if (!newDomain.equals(old)) {
+                String redirectUrl = redirect.replace(old, newDomain);
+                getClient = new HttpGetClient(redirectUrl, true);
                 getClient.doGet();
             }
 
             logger.info("redirect successfully...");
             return old;
-        }else if("send_again".equalsIgnoreCase(status)&&loginDomains.size()>0){
+        } else if ("send_again".equalsIgnoreCase(status) && loginDomains.size() > 0) {
             return loginDomains.get(0);
-        }else{
-            throw new IllegalStateException("Failed to login. url:"+loginUrl);
+        } else {
+            throw new IllegalStateException("Failed to login. url:" + loginUrl);
         }
 
     }
 
-    public String getDomain(String url){
+    public String getDomain(String url) {
 
         Matcher matcher = domainPattern.matcher(url);
-        if(matcher.find()){
+        if (matcher.find()) {
             return matcher.group("domain");
         }
         return null;
     }
-
 
     @Override
     public Object getData(String url, Map<String, String> params, boolean isPost, boolean isHttps) {
@@ -101,20 +99,20 @@ public class ESpiritSpider implements Spider{
         try {
             domain = login(url);
         } catch (IOException e) {
-            logger.error("An error occurred when login",e);
+            logger.error("An error occurred when login", e);
             return null;
         }
 
-        if(null!=domain){
+        if (null != domain) {
             String newDomain = getDomain(url);
-            if(!newDomain.equals(domain)){
-                url = url.replaceAll(newDomain,domain);
+            if (!newDomain.equals(domain)) {
+                url = url.replaceAll(newDomain, domain);
             }
         }
 
         String content = null;
 
-        if(isPost){//
+        if (isPost) {//
 
             HttpPostClient postClient = new HttpPostClient(url, new HashMap<>(params), true);
 
@@ -126,17 +124,16 @@ public class ESpiritSpider implements Spider{
                 e.printStackTrace();
             }
 
-        }else{//get
+        } else {//get
 
-
-            HttpGetClient getClient = new HttpGetClient(processGetUrl(url, params),true);
+            HttpGetClient getClient = new HttpGetClient(processGetUrl(url, params), true);
 
             getClient.doGet();
 
             content = getClient.getContent();
         }
 
-        if(null!=content&&content.length()>0){
+        if (null != content && content.length() > 0) {
 
             Object object = JSON.parse(content);
             return object;
@@ -146,23 +143,23 @@ public class ESpiritSpider implements Spider{
         return null;
     }
 
-    private String processGetUrl(String url, Map<String,String> params){
+    private String processGetUrl(String url, Map<String, String> params) {
 
-        if(null==params||params.isEmpty()){
+        if (null == params || params.isEmpty()) {
             return url;
         }
 
         StringBuilder sb = new StringBuilder();
 
-        for(Map.Entry<String,String> param : params.entrySet()){
+        for (Map.Entry<String, String> param : params.entrySet()) {
             sb.append("&").append(param.getKey()).append("=").append(param.getValue());
         }
 
-        if(url.matches("([^?&=]+)=([^?&=]*)")){
+        if (url.matches("([^?&=]+)=([^?&=]*)")) {
             return url + sb.toString();
-        }else if(url.indexOf('?')==url.length()-1){
+        } else if (url.indexOf('?') == url.length() - 1) {
             return url + sb.substring(1);
-        }else {
+        } else {
             return url + "?" + sb.substring(1);
         }
 

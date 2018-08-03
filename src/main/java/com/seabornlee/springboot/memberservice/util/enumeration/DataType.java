@@ -12,13 +12,13 @@ public enum DataType {
         this.value = value;
     }
 
-    public int getValue(){
+    public int getValue() {
         return this.value;
     }
 
-    public static DataType valueOf(int value){
-        for(DataType type : DataType.values()){
-            if(value == type.getValue()){
+    public static DataType valueOf(int value) {
+        for (DataType type : DataType.values()) {
+            if (value == type.getValue()) {
                 return type;
             }
         }

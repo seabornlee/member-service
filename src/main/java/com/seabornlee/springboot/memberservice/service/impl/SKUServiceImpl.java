@@ -20,20 +20,18 @@ public class SKUServiceImpl implements ISKUService {
 
     @Override
     public PageInfo<SKU> getListByPage(SKU query, int page, int size) {
-        page = page>0?page:1;
-        size = size>0?size:10;
-        PageHelper.startPage(page, size,true);
-
-        List<SKU> list = null==query?skuMapper.selectAll():skuMapper.select(query);
+        page = page > 0 ? page : 1;
+        size = size > 0 ? size : 10;
+        PageHelper.startPage(page, size, true);
+        List<SKU> list = null == query ? skuMapper.selectAll() : skuMapper.select(query);
         PageInfo<SKU> pageInfo = new PageInfo<>(list);
-
         return pageInfo;
     }
 
     @Override
     public boolean existSKU(SKU sku) {
         SKU skuFromDb = skuMapper.selectOne(sku);
-        return null!=skuFromDb;
+        return null != skuFromDb;
     }
 
     @Override
@@ -47,14 +45,14 @@ public class SKUServiceImpl implements ISKUService {
         SKU query = new SKU();
         query.setSkuNo(sku.getSkuNo()).setTenantId(sku.getTenantId()).setDataSource(sku.getDataSource());
 
-        if(existSKU(query)){
+        if (existSKU(query)) {
             SKU skuFromDb = skuMapper.selectOne(query);
             sku.setId(skuFromDb.getId());
-            if(null!=sku.getId()){
+            if (null != sku.getId()) {
                 updateSKU(sku);
             }
 
-        }else if(!existSKU(query)){
+        } else if (!existSKU(query)) {
             saveSKU(sku);
         }
 

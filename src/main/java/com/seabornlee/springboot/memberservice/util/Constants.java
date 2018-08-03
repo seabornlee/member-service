@@ -10,4 +10,8 @@ public class Constants {
     private Constants(){
 
     }
+
+    public static Integer ensurePositiveValue(Integer origin, int defaultValue){
+        return null==origin||origin<1?defaultValue:origin;
+    }
 }

@@ -38,7 +38,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
     private String typeAliasesPackage;
 
     //  配置mapper的扫描，找到所有的mapper.xml映射文件
-    //        @Value("${mybatis.mapperLocations : classpath:com/fei/springboot/dao/*.xml}")
+    //  @Value("${mybatis.mapperLocations : classpath:mybatis/*.xml}")
     @Value("${mybatis.mapperLocations}")
     private String mapperLocations;
 
@@ -74,10 +74,10 @@ public class MybatisConfig implements TransactionManagementConfigurer {
 
             return sessionFactoryBean.getObject();
         } catch (IOException e) {
-            logger.error("mybatis resolver mapper*xml is error",e);
+            logger.error("mybatis resolver mapper*xml is error", e);
             throw new RuntimeException(e);
         } catch (Exception e) {
-            logger.error("mybatis sqlSessionFactoryBean create error",e);
+            logger.error("mybatis sqlSessionFactoryBean create error", e);
             throw new RuntimeException(e);
         }
     }
@@ -93,11 +93,5 @@ public class MybatisConfig implements TransactionManagementConfigurer {
     public PlatformTransactionManager annotationDrivenTransactionManager() {
         return new DataSourceTransactionManager(dataSource);
     }
-
-    //将要执行的sql进行日志打印(不想拦截，就把这方法注释掉)
-    /*@Bean
-    public SqlPrintInterceptor sqlPrintInterceptor(){
-        return new SqlPrintInterceptor();
-    }*/
 
 }

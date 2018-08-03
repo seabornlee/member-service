@@ -20,19 +20,18 @@ public class WarehouseBinServiceImpl implements IWarehouseBinService {
 
     @Override
     public PageInfo<WarehouseBin> getListByPage(WarehouseBin query, int page, int size) {
-        page = page>0?page:1;
-        size = size>0?size:10;
-        PageHelper.startPage(page, size,true);
-        List<WarehouseBin> list = null==query?warehouseBinMapper.selectAll():warehouseBinMapper.select(query);
+        page = page > 0 ? page : 1;
+        size = size > 0 ? size : 10;
+        PageHelper.startPage(page, size, true);
+        List<WarehouseBin> list = null == query ? warehouseBinMapper.selectAll() : warehouseBinMapper.select(query);
         PageInfo<WarehouseBin> pageInfo = new PageInfo<>(list);
-
         return pageInfo;
     }
 
     @Override
     public Boolean existWarehouseBin(WarehouseBin warehouseBin) {
         WarehouseBin binFromDb = warehouseBinMapper.selectOne(warehouseBin);
-        return null!=binFromDb;
+        return null != binFromDb;
     }
 
     @Override
@@ -46,13 +45,13 @@ public class WarehouseBinServiceImpl implements IWarehouseBinService {
         query.setBinNo(warehouseBin.getBinNo())
                 .setDataSource(warehouseBin.getDataSource())
                 .setTenantId(warehouseBin.getTenantId());
-        if(existWarehouseBin(query)){
+        if (existWarehouseBin(query)) {
             WarehouseBin binFromDb = warehouseBinMapper.selectOne(query);
             warehouseBin.setId(binFromDb.getId());
-            if(null!=warehouseBin.getId()){
+            if (null != warehouseBin.getId()) {
                 updateWarehouseBin(warehouseBin);
             }
-        }else {
+        } else {
             saveWarehouseBin(warehouseBin);
         }
 

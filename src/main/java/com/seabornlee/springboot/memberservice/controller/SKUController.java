@@ -31,10 +31,9 @@ public class SKUController {
     @GetMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public ResponseEntity getSKUList(@RequestParam(required = false) Integer page,
-                                     @RequestParam(required = false) Integer size){
-        page = null==page||page<1?1:page;
-        size = null==size||size<1? Constants.DEFAULT_PAGE_SIZE:size;
-
-        return new ResponseEntity(skuService.getListByPage(new SKU(),page,size), HttpStatus.OK);
+                                     @RequestParam(required = false) Integer size) {
+        page = Constants.ensurePositiveValue(page,1);
+        size = Constants.ensurePositiveValue(size, Constants.DEFAULT_PAGE_SIZE);
+        return new ResponseEntity(skuService.getListByPage(new SKU(), page, size), HttpStatus.OK);
     }
 }

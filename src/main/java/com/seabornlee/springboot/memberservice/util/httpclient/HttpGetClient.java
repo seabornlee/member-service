@@ -12,9 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-/**
- * Created by liuxuhui on 2015/2/27.
- */
 public class HttpGetClient {
 
     private Logger logger = LoggerFactory.getLogger(HttpGetClient.class);
@@ -23,20 +20,20 @@ public class HttpGetClient {
     private String content;
     private CloseableHttpClient httpClient = null;
 
-    public HttpGetClient(String url){
-        this(url,false);
+    public HttpGetClient(String url) {
+        this(url, false);
     }
 
-    public HttpGetClient(String url, boolean ssl){
+    public HttpGetClient(String url, boolean ssl) {
         this.url = url;
-        httpClient = ssl?HttpClientSingletonFactory.getHttpsClient():HttpClientSingletonFactory.getHttpClient();
+        httpClient = ssl ? HttpClientSingletonFactory.getHttpsClient() : HttpClientSingletonFactory.getHttpClient();
     }
 
-    public int getStatus(){
+    public int getStatus() {
         return this.status;
     }
 
-    public String getContent(){
+    public String getContent() {
         return content;
     }
 
@@ -53,9 +50,9 @@ public class HttpGetClient {
                 status = stat;
                 if (stat >= 200 && stat < 300) {
                     HttpEntity entity = response.getEntity();
-                    return entity != null ? EntityUtils.toString(entity,encoding) : null;
+                    return entity != null ? EntityUtils.toString(entity, encoding) : null;
                 } else {
-                    logger.debug("An error occurred, request url:"+url);
+                    logger.debug("An error occurred, request url:" + url);
                     throw new ClientProtocolException("Unexpected response status: " + status);
                 }
             }
@@ -65,7 +62,7 @@ public class HttpGetClient {
         try {
             content = httpClient.execute(httpget, responseHandler);
         } catch (IOException e) {
-            logger.debug("An error occurred, request url:"+url);
+            logger.debug("An error occurred, request url:" + url);
             e.printStackTrace();
             return false;
         }
@@ -73,7 +70,7 @@ public class HttpGetClient {
         return true;
     }
 
-    public boolean doGet(){
+    public boolean doGet() {
         return doGet("UTF-8");
     }
 

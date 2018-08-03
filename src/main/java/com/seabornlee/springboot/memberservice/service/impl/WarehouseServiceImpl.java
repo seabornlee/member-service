@@ -19,10 +19,10 @@ public class WarehouseServiceImpl implements IWarehouseService {
 
     @Override
     public PageInfo<Warehouse> getListByPage(Warehouse query, int page, int size) {
-        page = page>0?page:1;
-        size = size>0?size:10;
-        PageHelper.startPage(page, size,true);
-        List<Warehouse> list = null==query?warehouseMapper.selectAll():warehouseMapper.select(query);
+        page = page > 0 ? page : 1;
+        size = size > 0 ? size : 10;
+        PageHelper.startPage(page, size, true);
+        List<Warehouse> list = null == query ? warehouseMapper.selectAll() : warehouseMapper.select(query);
         PageInfo<Warehouse> pageInfo = new PageInfo<>(list);
 
         return pageInfo;
@@ -31,7 +31,7 @@ public class WarehouseServiceImpl implements IWarehouseService {
     @Override
     public boolean existWarehouse(Warehouse warehouse) {
         Warehouse warehouseFromDb = warehouseMapper.selectOne(warehouse);
-        return null!=warehouseFromDb;
+        return null != warehouseFromDb;
     }
 
     @Override
@@ -46,13 +46,13 @@ public class WarehouseServiceImpl implements IWarehouseService {
                 .setDataSource(warehouse.getDataSource())
                 .setTenantId(warehouse.getTenantId());
 
-        if(existWarehouse(query)){
+        if (existWarehouse(query)) {
             Warehouse warehouseFromDb = warehouseMapper.selectOne(query);
             warehouse.setId(warehouseFromDb.getId());
-            if(null!=warehouse.getId()){
+            if (null != warehouse.getId()) {
                 updateWarehouse(warehouse);
             }
-        }else {
+        } else {
             saveWarehouse(warehouse);
         }
     }

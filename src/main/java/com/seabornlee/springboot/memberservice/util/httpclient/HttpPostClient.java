@@ -20,9 +20,6 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 
-/**
- * Created by liuxuhui on 2015/2/27.
- */
 public class HttpPostClient {
 
     private Logger logger = LoggerFactory.getLogger(HttpPostClient.class);
@@ -30,59 +27,59 @@ public class HttpPostClient {
     private int status = 0;
     private String content;
     private CloseableHttpClient httpClient = null;
-    private IdentityHashMap<String,String> params = new IdentityHashMap<String,String>();
-    private HashMap<String,String> headers = new HashMap<String,String>();
+    private IdentityHashMap<String, String> params = new IdentityHashMap<String, String>();
+    private HashMap<String, String> headers = new HashMap<String, String>();
 
-    public HttpPostClient(String url){
-        this(url,null,false);
+    public HttpPostClient(String url) {
+        this(url, null, false);
     }
 
-    public HttpPostClient(String url, HashMap<String,String> params){
+    public HttpPostClient(String url, HashMap<String, String> params) {
         this(url, params, false);
     }
 
-    public HttpPostClient(String url, HashMap<String,String> params, boolean ssl){
+    public HttpPostClient(String url, HashMap<String, String> params, boolean ssl) {
         this.url = url;
-        httpClient = ssl?HttpClientSingletonFactory.getHttpsClient():HttpClientSingletonFactory.getHttpClient();
-        if(null!=params){
+        httpClient = ssl ? HttpClientSingletonFactory.getHttpsClient() : HttpClientSingletonFactory.getHttpClient();
+        if (null != params) {
             this.params.putAll(params);
         }
     }
 
-    public int getStatus(){
+    public int getStatus() {
         return this.status;
     }
 
-    public String getContent(){
+    public String getContent() {
         return content;
     }
 
-    public void addParam(String key, String value){
-        params.put(key,value);
+    public void addParam(String key, String value) {
+        params.put(key, value);
     }
 
-    public void addParams(IdentityHashMap<String,String> params){
-        if(null!=params){
+    public void addParams(IdentityHashMap<String, String> params) {
+        if (null != params) {
             this.params.putAll(params);
         }
     }
 
-    public void setHeader(String key, String value){
-        headers.put(key,value);
+    public void setHeader(String key, String value) {
+        headers.put(key, value);
     }
 
-    public void setHeaders(HashMap<String,String> params){
-        if(null!=params){
+    public void setHeaders(HashMap<String, String> params) {
+        if (null != params) {
             this.headers.putAll(params);
         }
     }
 
-    private List<NameValuePair> getParams(){
+    private List<NameValuePair> getParams() {
         List<NameValuePair> result = null;
-        if(null!=params){
+        if (null != params) {
             result = new ArrayList<NameValuePair>();
-            for(String key : params.keySet()){
-                BasicNameValuePair pair = new BasicNameValuePair(key,params.get(key));
+            for (String key : params.keySet()) {
+                BasicNameValuePair pair = new BasicNameValuePair(key, params.get(key));
                 result.add(pair);
             }
         }
@@ -94,15 +91,15 @@ public class HttpPostClient {
 
         HttpPost httpPost = new HttpPost(this.url);
 
-        if(headers!=null&&headers.size()>0){
-            for (String key:headers.keySet()){
+        if (headers != null && headers.size() > 0) {
+            for (String key : headers.keySet()) {
                 httpPost.setHeader(key, headers.get(key));
             }
         }
 
         final List<NameValuePair> nvps = this.getParams();
-        if(null!=nvps&&nvps.size()>0){
-            httpPost.setEntity(new UrlEncodedFormEntity(nvps,encoding));
+        if (null != nvps && nvps.size() > 0) {
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps, encoding));
         }
 
         ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
@@ -116,7 +113,7 @@ public class HttpPostClient {
                     HttpEntity entity = response.getEntity();
                     return entity != null ? EntityUtils.toString(entity, encoding) : null;
                 } else {
-                    logger.debug("An error occurred,request url:"+url+"\n request body:"+ JSON.toJSONString(nvps));
+                    logger.debug("An error occurred,request url:" + url + "\n request body:" + JSON.toJSONString(nvps));
                     throw new ClientProtocolException("Unexpected response status: " + status);
                 }
             }
@@ -126,7 +123,7 @@ public class HttpPostClient {
         try {
             content = httpClient.execute(httpPost, responseHandler);
         } catch (IOException e) {
-            logger.debug("An error occurred,request url:"+url+"\n request body:"+ JSON.toJSONString(nvps));
+            logger.debug("An error occurred,request url:" + url + "\n request body:" + JSON.toJSONString(nvps));
             e.printStackTrace();
             return false;
         }

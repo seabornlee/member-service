@@ -26,18 +26,18 @@ public class DataSyncRecordController {
     @Autowired
     private IDataSyncRecordService dataSyncRecordService;
 
-    @ApiOperation(value = "数据同步记录列表",notes = "分页获取数据同步记录")
+    @ApiOperation(value = "数据同步记录列表", notes = "分页获取数据同步记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = false, paramType = "query")
     })
     @GetMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public ResponseEntity listRecord(@RequestParam(required = false) Integer page,
-                                     @RequestParam(required = false) Integer size){
-        page = null==page||page<=0?1:page;
-        size = null==size||size<=0?DEFAULT_PAGE_SIZE:size;
-        PageInfo<DataSyncRecord> data = dataSyncRecordService.getListByPage(page,size);
-        return new ResponseEntity(data,HttpStatus.OK);
+                                     @RequestParam(required = false) Integer size) {
+        page = Constants.ensurePositiveValue(page,1);
+        size = Constants.ensurePositiveValue(size, DEFAULT_PAGE_SIZE);
+        PageInfo<DataSyncRecord> data = dataSyncRecordService.getListByPage(page, size);
+        return new ResponseEntity(data, HttpStatus.OK);
     }
 
 }

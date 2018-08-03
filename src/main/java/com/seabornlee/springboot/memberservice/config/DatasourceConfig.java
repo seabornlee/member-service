@@ -76,8 +76,8 @@ public class DatasourceConfig {
     @Value("${spring.datasource.druidPassword}")
     private String druidPassword;
 
-    @Bean(name="dataSource", initMethod = "init", destroyMethod = "close")
-    public DataSource masterDataSource(){
+    @Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
+    public DataSource masterDataSource() {
         DruidDataSource datasource = new DruidDataSource();
         try {
             datasource.setUrl(this.dbUrl);
@@ -118,7 +118,7 @@ public class DatasourceConfig {
         return reg;
     }
 
-    @Bean(name="druidWebStatFilter")
+    @Bean(name = "druidWebStatFilter")
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new WebStatFilter());

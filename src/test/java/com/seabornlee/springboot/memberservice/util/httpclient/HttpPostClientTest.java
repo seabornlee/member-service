@@ -17,17 +17,17 @@ public class HttpPostClientTest {
     @Test
     public void doPost() throws IOException {
         HttpPostClient postClient = new HttpPostClient("http://www.runscm.com/user_login");
-        postClient.addParam("username","potato");
-        postClient.addParam("password","potato-plan");
-        postClient.addParam("browserCode","chrome");
+        postClient.addParam("username", "potato");
+        postClient.addParam("password", "potato-plan");
+        postClient.addParam("browserCode", "chrome");
 
-        postClient.setHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+        postClient.setHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 
         postClient.doPost();
 
         String content = postClient.getContent();
 
-        assertTrue(null!=content);
+        assertTrue(null != content);
 
         logger.info(content);
         logger.info("------------");
@@ -35,22 +35,22 @@ public class HttpPostClientTest {
         JSONObject result = JSON.parseObject(content);
 
         String redirect = result.getString("data");
-        redirect = redirect.replaceAll("@@@","?JSESSIONID=");
-        redirect = redirect.replaceAll("successfulUrl=/","successfulUrl=%2f");
+        redirect = redirect.replaceAll("@@@", "?JSESSIONID=");
+        redirect = redirect.replaceAll("successfulUrl=/", "successfulUrl=%2f");
 
         logger.info(redirect);
 
-        HttpGetClient getClient = new HttpGetClient(redirect,true);
+        HttpGetClient getClient = new HttpGetClient(redirect, true);
         getClient.doGet();
         content = getClient.getContent();
-        assertTrue(null!=content);
+        assertTrue(null != content);
         logger.info(content);
         logger.info("------------");
 
-        getClient = new HttpGetClient("https://hz1.ejlerp.com/warehouse/list",true);
+        getClient = new HttpGetClient("https://hz1.ejlerp.com/warehouse/list", true);
         getClient.doGet();
         content = getClient.getContent();
-        assertTrue(null!=content);
+        assertTrue(null != content);
         logger.info(content);
     }
 }

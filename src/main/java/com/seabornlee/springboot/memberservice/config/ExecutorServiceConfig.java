@@ -23,7 +23,7 @@ public class ExecutorServiceConfig {
 
 
     @Bean(value = "myThreadPoolExecutor")
-    public ThreadPoolExecutor threadPoolTaskExecutor(){
+    public ThreadPoolExecutor threadPoolTaskExecutor() {
 
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setCorePoolSize(corePoolSize);

@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ESpiritDataSyncService extends AbstractDataSyncService {
@@ -40,28 +38,28 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
 
     @Override
     protected void doSync(DataType type) {
-        doSync(type,null,null);
+        doSync(type, null, null);
     }
 
     @Override
     protected void doSync(DataType type, Date start, Date end) {
 
-        if(null==start){
+        if (null == start) {
 
-            switch (type){
+            switch (type) {
                 case SKU:
                     SKUProcessor processor = new SKUProcessor();
                     processSKUList(processor.getData());
                     break;
                 case WAREHOUSE_BIN:
-                    WarehouseBinPorcessor wbProcessor = new WarehouseBinPorcessor();
+                    WarehouseBinProcessor wbProcessor = new WarehouseBinProcessor();
                     processWarehouseBins(wbProcessor.getData());
                     break;
                 default:
                     break;
             }
 
-        }else{
+        } else {
 
         }
 
@@ -72,54 +70,53 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
         return DataSourceEnum.ESpirit;
     }
 
-    private Spider doGetSpider(){
-        return new ESpiritSpider(username,password,loginUrl);
+    private Spider doGetSpider() {
+        return new ESpiritSpider(username, password, loginUrl);
     }
 
-    public void processSKUList(List<SKU> list){
+    public void processSKUList(List<SKU> list) {
 
-        if(null==list||list.isEmpty()){
+        if (null == list || list.isEmpty()) {
             return;
         }
 
-        for(SKU sku : list){
+        for (SKU sku : list) {
             skuService.saveOrUpdate(sku);
         }
 
     }
 
-    public void processWarehouseBins(List<WarehouseBin> list){
+    public void processWarehouseBins(List<WarehouseBin> list) {
 
-        if(null==list||list.isEmpty()){
+        if (null == list || list.isEmpty()) {
             return;
         }
-        for(WarehouseBin bin : list){
+        for (WarehouseBin bin : list) {
             warehouseBinService.saveOrUpdate(bin);
         }
     }
 
-    class SKUProcessor extends AbstractDataProcessor<SKU>{
+    class SKUProcessor extends AbstractDataProcessor<SKU> {
 
         private boolean isIncrement;
+
         public SKUProcessor() {
             super(SKU_ALL_DATA_URL, DataType.SKU, false, null);
             isIncrement = false;
         }
 
-        public SKUProcessor(Date start, Date end){
+        public SKUProcessor(Date start, Date end) {
             super(SKU_INCREMENT_DATA_URL, DataType.SKU, true, null);
-            //params = new HashMap<String,Object>();
-            //params.put("")
             isIncrement = true;
         }
 
         @Override
         public List<SKU> process(JSONArray list) {
-            if(null==list||list.isEmpty()){
+            if (null == list || list.isEmpty()) {
                 return null;
             }
             List<SKU> result = new ArrayList<>(list.size());
-            for(int i=0;i<list.size();i++){
+            for (int i = 0; i < list.size(); i++) {
                 JSONObject one = list.getJSONObject(i);
                 SKU sku = new SKU();
                 sku.setBarCode(one.getString("bar_code"));
@@ -139,38 +136,37 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
 
         @Override
         protected JSONArray getDataList() {
-            Object data = spider.getData(url,params,isPost,true);
-            if(isIncrement){
+            Object data = spider.getData(url, params, isPost, true);
+            if (isIncrement) {
 
-            }else{
+            } else {
                 return (JSONArray) data;
             }
             return null;
         }
     }
 
-    class WarehouseBinPorcessor extends AbstractDataProcessor<WarehouseBin>{
+    class WarehouseBinProcessor extends AbstractDataProcessor<WarehouseBin> {
 
         private boolean isIncrement;
-        public WarehouseBinPorcessor() {
+
+        public WarehouseBinProcessor() {
             super(WAREHOUSE_BIN_ALL_DATA_URL, DataType.WAREHOUSE_BIN, false, null);
             isIncrement = false;
         }
 
-        public WarehouseBinPorcessor(Date start, Date end){
+        public WarehouseBinProcessor(Date start, Date end) {
             super(WAREHOUSE_BIN_INCREMENT_DATA_URL, DataType.WAREHOUSE_BIN, true, null);
-            //params = new HashMap<String,Object>();
-            //params.put("")
             isIncrement = true;
         }
 
         @Override
         public List<WarehouseBin> process(JSONArray list) {
-            if(null==list||list.isEmpty()){
+            if (null == list || list.isEmpty()) {
                 return null;
             }
             List<WarehouseBin> result = new ArrayList<>(list.size());
-            for(int i=0;i<list.size();i++){
+            for (int i = 0; i < list.size(); i++) {
                 JSONObject one = list.getJSONObject(i);
                 WarehouseBin bin = new WarehouseBin();
                 bin.setBinNo(one.getString("warehouse_bin_no"));
@@ -197,10 +193,10 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
 
         @Override
         protected JSONArray getDataList() {
-            Object data = spider.getData(url,params,isPost,true);
-            if(isIncrement){
+            Object data = spider.getData(url, params, isPost, true);
+            if (isIncrement) {
 
-            }else{
+            } else {
                 return (JSONArray) data;
             }
             return null;

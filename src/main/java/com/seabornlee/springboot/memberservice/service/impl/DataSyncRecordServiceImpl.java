@@ -18,9 +18,9 @@ public class DataSyncRecordServiceImpl implements IDataSyncRecordService {
 
     @Override
     public PageInfo<DataSyncRecord> getListByPage(int page, int size) {
-        page = page>0?page:1;
-        size = size>0?size:10;
-        PageHelper.startPage(page, size,true);
+        page = page > 0 ? page : 1;
+        size = size > 0 ? size : 10;
+        PageHelper.startPage(page, size, true);
 
         PageInfo<DataSyncRecord> pageInfo = new PageInfo<>(dataSyncRecordMapper.selectAll());
 
@@ -29,10 +29,10 @@ public class DataSyncRecordServiceImpl implements IDataSyncRecordService {
 
     @Override
     public PageInfo<DataSyncRecord> getListByPage(DataSyncRecord record, int page, int size) {
-        page = page>0?page:1;
-        size = size>0?size:10;
-        PageHelper.startPage(page, size,true);
-        List<DataSyncRecord> list = null==record?dataSyncRecordMapper.selectAll():dataSyncRecordMapper.select(record);
+        page = page > 0 ? page : 1;
+        size = size > 0 ? size : 10;
+        PageHelper.startPage(page, size, true);
+        List<DataSyncRecord> list = null == record ? dataSyncRecordMapper.selectAll() : dataSyncRecordMapper.select(record);
         PageInfo<DataSyncRecord> pageInfo = new PageInfo<>(list);
 
         return pageInfo;

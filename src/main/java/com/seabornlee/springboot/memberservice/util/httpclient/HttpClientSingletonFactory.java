@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 
 public class HttpClientSingletonFactory {
 
-
     private int connectionTimeToLive = 20;
     private int maxTotalConnection = 50;
     private int maxPerRoute = 20;
@@ -153,7 +152,7 @@ public class HttpClientSingletonFactory {
     }
 
     /**
-     * ´´½¨SSL°²È«Á¬½Ó
+     * ï¿½ï¿½ï¿½ï¿½SSLï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½
      *
      * @return
      */

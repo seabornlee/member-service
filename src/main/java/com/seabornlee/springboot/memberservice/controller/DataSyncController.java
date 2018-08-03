@@ -31,12 +31,12 @@ public class DataSyncController {
     @GetMapping(value = "/sync", produces = "application/json")
     @ResponseBody
     public ResponseEntity syncData(HttpServletRequest request,
-                                   @RequestParam Integer dataType){
+                                   @RequestParam Integer dataType) {
 
         DataType type = DataType.valueOf(dataType);
 
-        if(null==type){
-            return new ResponseEntity("dataType is not supported",HttpStatus.OK);
+        if (null == type) {
+            return new ResponseEntity("dataType is not supported", HttpStatus.OK);
         }
 
         DataSyncRecord record = dataSyncService.sync(request, type);

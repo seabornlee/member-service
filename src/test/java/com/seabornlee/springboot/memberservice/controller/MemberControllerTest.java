@@ -56,9 +56,9 @@ public class MemberControllerTest {
 
         given().
                 standaloneSetup(memberController).
-                when().
+        when().
                 get("/members/list").
-                then().
+        then().
                 statusCode(404);
     }
 

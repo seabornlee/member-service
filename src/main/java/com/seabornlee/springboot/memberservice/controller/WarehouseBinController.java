@@ -23,7 +23,6 @@ public class WarehouseBinController {
     @Autowired
     private IWarehouseBinService warehouseBinService;
 
-
     @ApiOperation(value = "库位列表", notes = "分页获取库位列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "page", value = "页码", required = false, defaultValue = "1", dataType = "query"),
@@ -32,11 +31,9 @@ public class WarehouseBinController {
     @GetMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public ResponseEntity getWarehouseBinList(@RequestParam(required = false) Integer page,
-                                              @RequestParam(required = false) Integer size){
-
-        page = null==page||page<=0?1:page;
-        size = null==size||size<=0? Constants.DEFAULT_PAGE_SIZE :size;
-
-        return new ResponseEntity(warehouseBinService.getListByPage(new WarehouseBin(),page,size), HttpStatus.OK);
+                                              @RequestParam(required = false) Integer size) {
+        page = Constants.ensurePositiveValue(page,1);
+        size = Constants.ensurePositiveValue(size, Constants.DEFAULT_PAGE_SIZE);
+        return new ResponseEntity(warehouseBinService.getListByPage(new WarehouseBin(), page, size), HttpStatus.OK);
     }
 }

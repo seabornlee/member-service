@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 
-public abstract class AbstractDataSyncService implements IDataSyncService{
+public abstract class AbstractDataSyncService implements IDataSyncService {
 
     @Autowired
     protected ExecutorService executorService;
@@ -31,7 +31,7 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
     public DataSyncRecord sync(HttpServletRequest request, DataType type, Date start, Date end) {
 
         //
-        final DataSyncRecord record = makeRecord(request,type);
+        final DataSyncRecord record = makeRecord(request, type);
         dataSyncRecordService.saveRecord(record);
 
         executorService.submit(new Runnable() {
@@ -39,10 +39,10 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
             public void run() {
 
                 try {
-                    if(null==start){//无开始时间全量取
+                    if (null == start) {//无开始时间全量取
                         doSync(type);
-                    }else{
-                        Date endTime = null==end?new Date():end;
+                    } else {
+                        Date endTime = null == end ? new Date() : end;
                         doSync(type, start, endTime);
                     }
                     // sync successfully
@@ -68,7 +68,7 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
 
     }
 
-    private DataSyncRecord makeRecord(HttpServletRequest request, DataType type){
+    private DataSyncRecord makeRecord(HttpServletRequest request, DataType type) {
 
         DataSyncRecord record = new DataSyncRecord();
         record.setDataSource(getDataSource().getValue());
@@ -83,18 +83,20 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
     }
 
     protected abstract void doSync(DataType type);
+
     protected abstract void doSync(DataType type, Date start, Date end);
+
     protected abstract DataSourceEnum getDataSource();
 
-    interface DataProcessor<T>{
+    interface DataProcessor<T> {
         public List<T> process(JSONArray list);
     }
 
-    public abstract class AbstractDataProcessor<T> implements DataProcessor<T>{
+    public abstract class AbstractDataProcessor<T> implements DataProcessor<T> {
         protected String url;
         protected DataType type;
         protected boolean isPost;
-        protected Map<String,String> params;
+        protected Map<String, String> params;
         protected Spider spider;
 
         public AbstractDataProcessor(String url, DataType type, boolean isPost, Map<String, String> params) {
@@ -106,9 +108,10 @@ public abstract class AbstractDataSyncService implements IDataSyncService{
         }
 
         protected abstract Spider getSpider();
+
         protected abstract JSONArray getDataList();
 
-        public List<T> getData(){
+        public List<T> getData() {
             return process(getDataList());
         }
     }

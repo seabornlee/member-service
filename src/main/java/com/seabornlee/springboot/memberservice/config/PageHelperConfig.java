@@ -12,7 +12,7 @@ import java.util.Properties;
 @ConfigurationProperties(prefix = "mybatis.pagehelper")
 public class PageHelperConfig {
 
-    private Map<String,String> properties;
+    private Map<String, String> properties;
 
     public Map<String, String> getProperties() {
         return properties;
@@ -25,7 +25,7 @@ public class PageHelperConfig {
 
     // page helper
     @Bean
-    public PageHelper pageHelper(){
+    public PageHelper pageHelper() {
         PageHelper pageHelper = new PageHelper();
         Properties p = new Properties();
         p.putAll(properties);
