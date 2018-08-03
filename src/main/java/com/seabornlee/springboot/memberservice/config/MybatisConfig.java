@@ -1,5 +1,7 @@
 package com.seabornlee.springboot.memberservice.config;
 
+import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -46,6 +48,8 @@ public class MybatisConfig implements TransactionManagementConfigurer {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private PageHelper pageHelper;
 
     // 提供SqlSeesion
     @Bean(name = "sqlSessionFactory")
@@ -64,9 +68,9 @@ public class MybatisConfig implements TransactionManagementConfigurer {
             //设置mybatis-config.xml配置文件位置
             sessionFactoryBean.setConfigLocation(new DefaultResourceLoader().getResource(configLocation));
 
-            //添加分页插件、打印sql插件
-            //Interceptor[] plugins = new Interceptor[]{sqlPrintInterceptor()};
-            //sessionFactoryBean.setPlugins(plugins);
+            //添加分页插件
+            Interceptor[] plugins = new Interceptor[]{pageHelper};
+            sessionFactoryBean.setPlugins(plugins);
 
             return sessionFactoryBean.getObject();
         } catch (IOException e) {

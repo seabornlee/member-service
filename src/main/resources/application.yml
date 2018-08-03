@@ -45,6 +45,9 @@ mybatis:
             rowBoundsWithCount: true
             reasonable: true
             pageSizeZero: true
+            helper-dialect: mysql
+            support-methods-arguments: true
+            params: count=countSql
 #通用mapper
 
 
