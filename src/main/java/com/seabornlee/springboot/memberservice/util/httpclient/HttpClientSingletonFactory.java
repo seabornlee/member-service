@@ -152,7 +152,7 @@ public class HttpClientSingletonFactory {
     }
 
     /**
-     * ����SSL��ȫ����
+     * 创建https
      *
      * @return
      */
