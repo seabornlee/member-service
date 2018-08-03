@@ -189,7 +189,7 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
 
         @Override
         protected Spider getSpider() {
-            return getSpider();
+            return doGetSpider();
         }
 
         @Override
