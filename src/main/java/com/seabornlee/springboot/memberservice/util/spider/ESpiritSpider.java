@@ -27,7 +27,7 @@ public class ESpiritSpider implements Spider{
     private String username;
     private String password;
     private String loginUrl;
-    private final CopyOnWriteArrayList<String> loginDomains = new CopyOnWriteArrayList<String>();
+    private final static CopyOnWriteArrayList<String> loginDomains = new CopyOnWriteArrayList<String>();
 
     public ESpiritSpider(String username, String password, String loginUrl) {
         this.username = username;
@@ -53,25 +53,35 @@ public class ESpiritSpider implements Spider{
 
         JSONObject result = JSON.parseObject(content);
 
-        String redirect = result.getString("data");
-        redirect = redirect.replaceAll("@@@","?JSESSIONID=");
-        redirect = redirect.replaceAll("successfulUrl=/","successfulUrl=%2f");
+        String status = result.getString("status");
+        if("Successful".equalsIgnoreCase(status)){
+            String redirect = result.getString("data");
+            redirect = redirect.replaceAll("@@@","?JSESSIONID=");
+            redirect = redirect.replaceAll("successfulUrl=/","successfulUrl=%2f");
 
-        logger.info("redirect to " + redirect);
+            logger.info("redirect to " + redirect);
 
-        HttpGetClient getClient = new HttpGetClient(redirect,true);
-        getClient.doGet();
-
-        String old = getDomain(redirect);
-        String newDomain = getDomain(domain);
-        if(!newDomain.equals(old)){
-            String redirectUrl = redirect.replace(old,newDomain);
-            getClient = new HttpGetClient(redirectUrl,true);
+            HttpGetClient getClient = new HttpGetClient(redirect,true);
             getClient.doGet();
+
+            String old = getDomain(redirect);
+            loginDomains.addIfAbsent(old);
+            String newDomain = getDomain(domain);
+            loginDomains.addIfAbsent(newDomain);
+            if(!newDomain.equals(old)){
+                String redirectUrl = redirect.replace(old,newDomain);
+                getClient = new HttpGetClient(redirectUrl,true);
+                getClient.doGet();
+            }
+
+            logger.info("redirect successfully...");
+            return old;
+        }else if("send_again".equalsIgnoreCase(status)&&loginDomains.size()>0){
+            return loginDomains.get(0);
+        }else{
+            throw new IllegalStateException("Failed to login. url:"+loginUrl);
         }
 
-        logger.info("redirect successfully...");
-        return old;
     }
 
     public String getDomain(String url){
