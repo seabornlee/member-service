@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout repo') {
             steps {
-                git url: 'https://github.com/seabornlee/member-service.git', branch: 'master'
+                git url: 'https://github.com/potato-plan/member-service.git', branch: 'master'
             }
         }
 
@@ -28,6 +28,12 @@ pipeline {
         stage('Package') {
             steps {
                 sh './mvnw clean package -Dunit-tests.skip=true -Dintegration-tests.skip=true'
+            }
+        }
+
+        stage('Gen Image') {
+            steps {
+                sh './mvnw dockerfile:build'
             }
         }
     }
