@@ -3,6 +3,7 @@ package com.seabornlee.springboot.memberservice.controller;
 import com.seabornlee.springboot.memberservice.domain.Member;
 import com.seabornlee.springboot.memberservice.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +37,11 @@ public class MemberController {
         } catch (Exception e) {
             throw new NotFoundException();
         }
+    }
+
+    @GetMapping(value = "/list")
+    @ResponseBody
+    public ResponseEntity list(){
+        return new ResponseEntity(memberService.selectAll(),HttpStatus.OK);
     }
 }
