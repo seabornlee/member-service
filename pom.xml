@@ -168,6 +168,24 @@
         </repository>
     </repositories>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <excludes>
+                    <exclude>application*.properties</exclude>
+                    <exclude>application*.yml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>application.yml</include>
+                    <include>application-${activatedProperties}.yml</include>
+                </includes>
+            </resource>
+
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -254,9 +272,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>5.1.4</version>
                 <configuration>
-                    <url>jdbc:mysql://127.0.0.1:3308/member_service</url>
-                    <user>root</user>
-                    <password>auto@163</password>
+                    <url>${jdbc.url}</url>
+                    <user>${jdbc.username}</user>
+                    <password>${jdbc.password}</password>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -293,6 +311,7 @@
                 <executions>
                     <execution>
                         <id>Generate MyBatis Artifacts</id>
+                        <phase>site-deploy</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -319,4 +338,84 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>test</id>
+            <build>
+                <filters>
+                    <filter>src/main/resources/filters/test.properties</filter>
+                </filters>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>mybatis/*.*</exclude>
+                            <exclude>**/*.jar</exclude>
+                        </excludes>
+                        <includes>
+                            <include>**/*.*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <activatedProperties>test</activatedProperties>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev</id>
+            <build>
+                <filters>
+                    <filter>src/main/resources/filters/dev.properties</filter>
+                </filters>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>mybatis/*.*</exclude>
+                            <exclude>**/*.jar</exclude>
+                        </excludes>
+                        <includes>
+                            <include>**/*.*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <build>
+                <filters>
+                    <filter>src/main/resources/filters/prod.properties</filter>
+                </filters>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>mybatis/*.*</exclude>
+                            <exclude>**/*.jar</exclude>
+                        </excludes>
+                        <includes>
+                            <include>**/*.*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 </project>

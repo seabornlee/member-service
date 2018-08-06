@@ -12,9 +12,9 @@ spring:
     datasource:
         name: db
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://127.0.0.1:3308/member_service?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-        username: root
-        password: auto@163
+        url: @jdbc.url@
+        username: @jdbc.username@
+        password: @jdbc.password@
         driver-class-name: com.mysql.jdbc.Driver
         minIdle: 20
         maxActive: 200
@@ -32,6 +32,8 @@ spring:
         filters: stat
         druidLoginName: druid
         druidPassword: druid
+    profiles:
+        active: @activatedProperties@
 
 mybatis:
      mapperLocations: classpath*:mapping/**/*.xml
