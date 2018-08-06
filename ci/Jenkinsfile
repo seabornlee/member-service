@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+        stage('SonarQube analysis') {
+            def sonarqubeScannerHome = tool name: 'SonarQube Scanner'
+
+            withSonarQubeEnv('SonarQube') {
+                sh "${sonarqubeScannerHome}/bin/sonar-scanner"
+            }
+        }
+
         stage('Check Style') {
             steps {
                 sh './mvnw validate'
