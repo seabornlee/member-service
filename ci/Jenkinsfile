@@ -19,7 +19,6 @@ pipeline {
         }
 
         stage("build & SonarQube analysis") {
-            agent { docker 'maven:3-alpine' }
             steps {
                 withSonarQubeEnv('My SonarQube Server') {
                     sh 'mvn clean package sonar:sonar'
