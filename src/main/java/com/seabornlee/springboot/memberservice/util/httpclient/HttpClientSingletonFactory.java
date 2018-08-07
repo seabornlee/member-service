@@ -3,7 +3,6 @@ package com.seabornlee.springboot.memberservice.util.httpclient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -12,10 +11,6 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContextBuilder;
 
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -125,7 +120,8 @@ public class HttpClientSingletonFactory {
 
     public HttpClientBuilder getHttpClientBuilder() {
 
-        PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(connectionTimeToLive, TimeUnit.SECONDS);
+        PoolingHttpClientConnectionManager poolingConnectionManager =
+                new PoolingHttpClientConnectionManager(connectionTimeToLive, TimeUnit.SECONDS);
         poolingConnectionManager.setDefaultMaxPerRoute(maxPerRoute);
         poolingConnectionManager.setMaxTotal(maxTotalConnection);
 

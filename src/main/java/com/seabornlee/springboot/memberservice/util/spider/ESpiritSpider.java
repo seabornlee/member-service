@@ -21,7 +21,8 @@ public class ESpiritSpider implements Spider {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final static Pattern domainPattern = Pattern.compile("^((http://)|(https://))?(?<domain>([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6})");
+    private final static Pattern domainPattern = Pattern.compile(
+            "^((http://)|(https://))?(?<domain>([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6})");
 
     private String username;
     private String password;

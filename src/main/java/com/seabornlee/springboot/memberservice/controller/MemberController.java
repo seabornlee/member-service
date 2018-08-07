@@ -15,7 +15,7 @@ import java.net.URI;
 @RequestMapping("/members")
 public class MemberController {
     @Autowired
-    MemberService memberService;
+    private MemberService memberService;
 
     @PostMapping
     public @ResponseBody
@@ -41,7 +41,7 @@ public class MemberController {
 
     @GetMapping(value = "/list")
     @ResponseBody
-    public ResponseEntity list(){
-        return new ResponseEntity(memberService.selectAll(),HttpStatus.OK);
+    public ResponseEntity list() {
+        return new ResponseEntity(memberService.selectAll(), HttpStatus.OK);
     }
 }

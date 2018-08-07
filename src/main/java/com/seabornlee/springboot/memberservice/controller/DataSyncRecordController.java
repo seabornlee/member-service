@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/data-sync-record")
 public class DataSyncRecordController {
 
-    private final static int DEFAULT_PAGE_SIZE = Constants.DEFAULT_PAGE_SIZE;
+    private static final int DEFAULT_PAGE_SIZE = Constants.DEFAULT_PAGE_SIZE;
 
     @Autowired
     private IDataSyncRecordService dataSyncRecordService;
@@ -34,7 +34,7 @@ public class DataSyncRecordController {
     @ResponseBody
     public ResponseEntity listRecord(@RequestParam(required = false) Integer page,
                                      @RequestParam(required = false) Integer size) {
-        page = Constants.ensurePositiveValue(page,1);
+        page = Constants.ensurePositiveValue(page, 1);
         size = Constants.ensurePositiveValue(size, DEFAULT_PAGE_SIZE);
         PageInfo<DataSyncRecord> data = dataSyncRecordService.getListByPage(page, size);
         return new ResponseEntity(data, HttpStatus.OK);

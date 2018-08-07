@@ -3,8 +3,6 @@ package com.seabornlee.springboot.memberservice.domain;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -49,7 +47,7 @@ public class WarehouseBin {
 
     private Integer tenantId;
 
-   public Integer getId() {
+    public Integer getId() {
         return id;
     }
 

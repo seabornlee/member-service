@@ -10,13 +10,15 @@ public interface IDataSyncService {
 
     /**
      * 全量
+     *
      * @param type 数据表
-     * */
+     */
     public DataSyncRecord sync(HttpServletRequest request, DataType type);
 
     /**
      * 增量
+     *
      * @param type 数据表
-     * */
+     */
     public DataSyncRecord sync(HttpServletRequest request, DataType type, Date start, Date end);
 }

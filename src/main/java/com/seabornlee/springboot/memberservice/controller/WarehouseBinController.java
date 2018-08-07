@@ -6,7 +6,6 @@ import com.seabornlee.springboot.memberservice.util.Constants;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +31,7 @@ public class WarehouseBinController {
     @ResponseBody
     public ResponseEntity getWarehouseBinList(@RequestParam(required = false) Integer page,
                                               @RequestParam(required = false) Integer size) {
-        page = Constants.ensurePositiveValue(page,1);
+        page = Constants.ensurePositiveValue(page, 1);
         size = Constants.ensurePositiveValue(size, Constants.DEFAULT_PAGE_SIZE);
         return new ResponseEntity(warehouseBinService.getListByPage(new WarehouseBin(), page, size), HttpStatus.OK);
     }

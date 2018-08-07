@@ -1,6 +1,5 @@
 package com.seabornlee.springboot.memberservice.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,7 @@ import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 @AutoConfigureAfter(MybatisConfig.class)
 public class MybatisMapperScannerConfig implements EnvironmentAware {
 
-    private final static String PLACE_HOLDER = "${mybatis.mapperScanPackage}";
+    private static final String PLACE_HOLDER = "${mybatis.mapperScanPackage}";
     private String mapperScanPackage;
 
     @Bean

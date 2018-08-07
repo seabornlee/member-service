@@ -7,7 +7,6 @@ import com.seabornlee.springboot.memberservice.util.Constants;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,12 +34,12 @@ public class SKUController {
     public ResponseEntity getSKUList(@RequestParam(required = false) String q,
                                      @RequestParam(required = false) Integer page,
                                      @RequestParam(required = false) Integer size) {
-        page = Constants.ensurePositiveValue(page,1);
+        page = Constants.ensurePositiveValue(page, 1);
         size = Constants.ensurePositiveValue(size, Constants.DEFAULT_PAGE_SIZE);
         PageInfo<SKU> pageInfo = null;
-        if(StringUtils.isNotBlank(q)){
+        if (StringUtils.isNotBlank(q)) {
             pageInfo = skuService.searchListByKeyword(q, page, size);
-        }else {
+        } else {
             pageInfo = skuService.getListByPage(new SKU(), page, size);
         }
         return new ResponseEntity(pageInfo, HttpStatus.OK);

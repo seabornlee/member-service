@@ -1,6 +1,5 @@
 package com.seabornlee.springboot.memberservice.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seabornlee.springboot.memberservice.client.SMSClient;
@@ -49,22 +48,22 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public List<Member> getAll(){
+    public List<Member> getAll() {
         return memberMapper.getAll();
     }
 
-    public PageInfo<Member> getByPage(int page, int size){
+    public PageInfo<Member> getByPage(int page, int size) {
 
-        page = page>0?page:1;
-        size = size>0?size:10;
-        PageHelper.startPage(page, size,true);
+        page = page > 0 ? page : 1;
+        size = size > 0 ? size : 10;
+        PageHelper.startPage(page, size, true);
 
         PageInfo<Member> pageInfo = new PageInfo<>(memberMapper.getAll());
 
         return pageInfo;
     }
 
-    public List<Member> selectAll(){
+    public List<Member> selectAll() {
         return memberMapper.selectAll();
     }
 }

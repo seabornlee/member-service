@@ -2,7 +2,6 @@ package com.seabornlee.springboot.memberservice.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.seabornlee.springboot.memberservice.domain.DataSyncRecord;
 import com.seabornlee.springboot.memberservice.domain.Warehouse;
 import com.seabornlee.springboot.memberservice.mapper.WarehouseMapper;
 import com.seabornlee.springboot.memberservice.service.IWarehouseService;

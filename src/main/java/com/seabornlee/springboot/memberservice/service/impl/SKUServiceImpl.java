@@ -2,7 +2,6 @@ package com.seabornlee.springboot.memberservice.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.seabornlee.springboot.memberservice.domain.DataSyncRecord;
 import com.seabornlee.springboot.memberservice.domain.SKU;
 import com.seabornlee.springboot.memberservice.mapper.SKUMapper;
 import com.seabornlee.springboot.memberservice.service.ISKUService;
@@ -21,8 +20,8 @@ public class SKUServiceImpl implements ISKUService {
 
     @Override
     public PageInfo<SKU> getListByPage(SKU query, int page, int size) {
-        page = Constants.ensurePositiveValue(page,1);
-        size = Constants.ensurePositiveValue(page,10);
+        page = Constants.ensurePositiveValue(page, 1);
+        size = Constants.ensurePositiveValue(page, 10);
         PageHelper.startPage(page, size, true);
         List<SKU> list = null == query ? skuMapper.selectAll() : skuMapper.select(query);
         PageInfo<SKU> pageInfo = new PageInfo<>(list);
@@ -32,7 +31,7 @@ public class SKUServiceImpl implements ISKUService {
     @Override
     public PageInfo<SKU> searchListByKeyword(String skuPrefix, int page, int size) {
         Example query = new Example(SKU.class);
-        query.createCriteria().andLike("skuNo",skuPrefix + "%");
+        query.createCriteria().andLike("skuNo", skuPrefix + "%");
         query.orderBy("skuNo");
         PageHelper.startPage(page, size, true);
         PageInfo<SKU> pageInfo = new PageInfo<>(skuMapper.selectByExample(query));

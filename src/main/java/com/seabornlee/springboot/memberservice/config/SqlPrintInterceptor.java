@@ -30,99 +30,98 @@ import java.util.regex.Matcher;
  *
  * @since 1.0.0
  */
-@Intercepts
-        ({
-                @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
-                @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})
-        })
+@Intercepts({
+    @Signature(type = Executor.class, method = "query",
+            args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+    @Signature(type = Executor.class, method = "update",
+            args = {MappedStatement.class, Object.class})
+})
 public class SqlPrintInterceptor implements Interceptor {
 
+    private Logger logger = LoggerFactory.getLogger(SqlPrintInterceptor.class);
 
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        private Logger logger = LoggerFactory.getLogger(SqlPrintInterceptor.class);
-
-        private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        @Override
-        public Object intercept(Invocation invocation) throws Throwable {
-            MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-            Object parameterObject = null;
-            if (invocation.getArgs().length > 1) {
-                parameterObject = invocation.getArgs()[1];
-            }
-
-            long start = System.currentTimeMillis();
-
-            Object result = invocation.proceed();
-
-            String statementId = mappedStatement.getId();
-            BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
-            Configuration configuration = mappedStatement.getConfiguration();
-            String sql = getSql(boundSql, parameterObject, configuration);
-
-            long end = System.currentTimeMillis();
-            long timing = end - start;
-            if(logger.isInfoEnabled()){
-                logger.info("执行sql耗时:" + timing + " ms" + " - id:" + statementId + " - Sql:" );
-                logger.info("   "+sql);
-            }
-
-            return result;
+    @Override
+    public Object intercept(Invocation invocation) throws Throwable {
+        MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+        Object parameterObject = null;
+        if (invocation.getArgs().length > 1) {
+            parameterObject = invocation.getArgs()[1];
         }
 
-        @Override
-        public Object plugin(Object target) {
-            if (target instanceof Executor) {
-                return Plugin.wrap(target, this);
-            }
-            return target;
+        long start = System.currentTimeMillis();
+
+        Object result = invocation.proceed();
+
+        String statementId = mappedStatement.getId();
+        BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
+        Configuration configuration = mappedStatement.getConfiguration();
+        String sql = getSql(boundSql, parameterObject, configuration);
+
+        long end = System.currentTimeMillis();
+        long timing = end - start;
+        if (logger.isInfoEnabled()) {
+            logger.info("执行sql耗时:" + timing + " ms" + " - id:" + statementId + " - Sql:");
+            logger.info("   " + sql);
         }
 
-        @Override
-        public void setProperties(Properties properties) {
-        }
+        return result;
+    }
 
-        private String getSql(BoundSql boundSql, Object parameterObject, Configuration configuration) {
-            String sql = boundSql.getSql().replaceAll("[\\s]+", " ");
-            List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-            TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
-            if (parameterMappings != null) {
-                for (int i = 0; i < parameterMappings.size(); i++) {
-                    ParameterMapping parameterMapping = parameterMappings.get(i);
-                    if (parameterMapping.getMode() != ParameterMode.OUT) {
-                        Object value;
-                        String propertyName = parameterMapping.getProperty();
-                        if (boundSql.hasAdditionalParameter(propertyName)) {
-                            value = boundSql.getAdditionalParameter(propertyName);
-                        } else if (parameterObject == null) {
-                            value = null;
-                        } else if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
-                            value = parameterObject;
-                        } else {
-                            MetaObject metaObject = configuration.newMetaObject(parameterObject);
-                            value = metaObject.getValue(propertyName);
-                        }
-                        sql = replacePlaceholder(sql, value);
+    @Override
+    public Object plugin(Object target) {
+        if (target instanceof Executor) {
+            return Plugin.wrap(target, this);
+        }
+        return target;
+    }
+
+    @Override
+    public void setProperties(Properties properties) {
+    }
+
+    private String getSql(BoundSql boundSql, Object parameterObject, Configuration configuration) {
+        String sql = boundSql.getSql().replaceAll("[\\s]+", " ");
+        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+        TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
+        if (parameterMappings != null) {
+            for (int i = 0; i < parameterMappings.size(); i++) {
+                ParameterMapping parameterMapping = parameterMappings.get(i);
+                if (parameterMapping.getMode() != ParameterMode.OUT) {
+                    Object value;
+                    String propertyName = parameterMapping.getProperty();
+                    if (boundSql.hasAdditionalParameter(propertyName)) {
+                        value = boundSql.getAdditionalParameter(propertyName);
+                    } else if (parameterObject == null) {
+                        value = null;
+                    } else if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
+                        value = parameterObject;
+                    } else {
+                        MetaObject metaObject = configuration.newMetaObject(parameterObject);
+                        value = metaObject.getValue(propertyName);
                     }
+                    sql = replacePlaceholder(sql, value);
                 }
             }
-            return sql;
         }
+        return sql;
+    }
 
-        private String replacePlaceholder(String sql, Object propertyValue) {
-            String result;
-            if (propertyValue != null) {
-                if (propertyValue instanceof String) {
-                    result = "'" + propertyValue + "'";
-                } else if (propertyValue instanceof Date) {
-                    result = "'" + DATE_FORMAT.format(propertyValue) + "'";
-                } else {
-                    result = propertyValue.toString();
-                }
+    private String replacePlaceholder(String sql, Object propertyValue) {
+        String result;
+        if (propertyValue != null) {
+            if (propertyValue instanceof String) {
+                result = "'" + propertyValue + "'";
+            } else if (propertyValue instanceof Date) {
+                result = "'" + DATE_FORMAT.format(propertyValue) + "'";
             } else {
-                result = "null";
+                result = propertyValue.toString();
             }
-            return sql.replaceFirst("\\?", Matcher.quoteReplacement(result));
+        } else {
+            result = "null";
         }
+        return sql.replaceFirst("\\?", Matcher.quoteReplacement(result));
+    }
 
 }
