@@ -6,6 +6,7 @@ import com.seabornlee.springboot.memberservice.domain.DataSyncRecord;
 import com.seabornlee.springboot.memberservice.domain.SKU;
 import com.seabornlee.springboot.memberservice.mapper.SKUMapper;
 import com.seabornlee.springboot.memberservice.service.ISKUService;
+import com.seabornlee.springboot.memberservice.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -20,11 +21,21 @@ public class SKUServiceImpl implements ISKUService {
 
     @Override
     public PageInfo<SKU> getListByPage(SKU query, int page, int size) {
-        page = page > 0 ? page : 1;
-        size = size > 0 ? size : 10;
+        page = Constants.ensurePositiveValue(page,1);
+        size = Constants.ensurePositiveValue(page,10);
         PageHelper.startPage(page, size, true);
         List<SKU> list = null == query ? skuMapper.selectAll() : skuMapper.select(query);
         PageInfo<SKU> pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<SKU> searchListByKeyword(String skuPrefix, int page, int size) {
+        Example query = new Example(SKU.class);
+        query.createCriteria().andLike("skuNo",skuPrefix + "%");
+        query.orderBy("skuNo");
+        PageHelper.startPage(page, size, true);
+        PageInfo<SKU> pageInfo = new PageInfo<>(skuMapper.selectByExample(query));
         return pageInfo;
     }
 

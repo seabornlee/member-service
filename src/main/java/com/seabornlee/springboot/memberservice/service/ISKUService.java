@@ -7,6 +7,8 @@ public interface ISKUService {
 
     public PageInfo<SKU> getListByPage(SKU query, int page, int size);
 
+    public PageInfo<SKU> searchListByKeyword(String sku, int page, int size);
+
     public boolean existSKU(SKU sku);
 
     public void saveSKU(SKU sku);

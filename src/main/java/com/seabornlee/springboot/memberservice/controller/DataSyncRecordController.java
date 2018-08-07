@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/dataSyncRecord")
+@RequestMapping("/data-sync-record")
 public class DataSyncRecordController {
 
     private final static int DEFAULT_PAGE_SIZE = Constants.DEFAULT_PAGE_SIZE;
@@ -30,7 +30,7 @@ public class DataSyncRecordController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = false, paramType = "query")
     })
-    @GetMapping(value = "/list", produces = "application/json")
+    @GetMapping(value = "/records", produces = "application/json")
     @ResponseBody
     public ResponseEntity listRecord(@RequestParam(required = false) Integer page,
                                      @RequestParam(required = false) Integer size) {

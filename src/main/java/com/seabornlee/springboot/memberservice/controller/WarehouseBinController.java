@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/warehouseBin")
+@RequestMapping("/warehouse-bin")
 public class WarehouseBinController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class WarehouseBinController {
             @ApiImplicitParam(name = "page", value = "页码", required = false, defaultValue = "1", dataType = "query"),
             @ApiImplicitParam(name = "size", value = "大小", required = false, defaultValue = "10", dataType = "query")
     })
-    @GetMapping(value = "/list", produces = "application/json")
+    @GetMapping(value = "/bins", produces = "application/json")
     @ResponseBody
     public ResponseEntity getWarehouseBinList(@RequestParam(required = false) Integer page,
                                               @RequestParam(required = false) Integer size) {
