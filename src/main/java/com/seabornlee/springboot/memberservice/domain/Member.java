@@ -14,7 +14,8 @@ public class Member {
     private String mobile;
     private char VIP;
 
-    public Member() { }
+    public Member() {
+    }
 
     public Member(Long id, String name) {
         this.id = id;

@@ -1,0 +1,19 @@
+package com.seabornlee.springboot.memberservice.service;
+
+import com.github.pagehelper.PageInfo;
+import com.seabornlee.springboot.memberservice.domain.DataSyncRecord;
+
+public interface IDataSyncRecordService {
+
+    public PageInfo<DataSyncRecord> getListByPage(int page, int size);
+
+    public PageInfo<DataSyncRecord> getListByPage(DataSyncRecord record, int page, int size);
+
+    public DataSyncRecord getRecordById(Integer recordId);
+
+    public void saveRecord(DataSyncRecord record);
+
+    public void updateRecord(DataSyncRecord record);
+
+    public void deleteRecord(DataSyncRecord record);
+}
