@@ -39,6 +39,13 @@ public class DataSyncRecordServiceImpl implements IDataSyncRecordService {
     }
 
     @Override
+    public DataSyncRecord getRecordById(Integer recordId) {
+        DataSyncRecord record = new DataSyncRecord();
+        record.setId(recordId);
+        return dataSyncRecordMapper.selectOne(record);
+    }
+
+    @Override
     public void saveRecord(DataSyncRecord record) {
 
         dataSyncRecordMapper.insert(record);

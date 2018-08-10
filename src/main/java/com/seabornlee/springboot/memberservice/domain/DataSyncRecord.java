@@ -107,7 +107,7 @@ public class DataSyncRecord {
     }
 
     public Integer getStatus() {
-        return status.getValue();
+        return null!=status?status.getValue():null;
     }
 
     public DataSyncRecord setStatus(Integer status) {

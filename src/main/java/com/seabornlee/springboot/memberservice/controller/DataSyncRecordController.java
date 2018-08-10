@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,16 @@ public class DataSyncRecordController {
         size = Constants.ensurePositiveValue(size, DEFAULT_PAGE_SIZE);
         PageInfo<DataSyncRecord> data = dataSyncRecordService.getListByPage(page, size);
         return new ResponseEntity(data, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "数据同步记录状态", notes = "获取数据同步记录状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "recordId", value = "记录id", required = true, paramType = "path")
+    })
+    @GetMapping(value = "/{recordId}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity listRecord(@PathVariable Integer recordId) {
+        return new ResponseEntity(dataSyncRecordService.getRecordById(recordId), HttpStatus.OK);
     }
 
 }

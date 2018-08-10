@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +43,28 @@ public class SKUController {
         } else {
             pageInfo = skuService.getListByPage(new SKU(), page, size);
         }
+        return new ResponseEntity(pageInfo, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "sku绑定rfid列表", notes = "分页获取sku所绑定的rfid列表")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "skuId", value = "SKU id", required = true, dataType = "path"),
+            @ApiImplicitParam(name = "page", value = "页码", required = false, defaultValue = "1", dataType = "query"),
+            @ApiImplicitParam(name = "size", value = "大小", required = false, defaultValue = "10", dataType = "query")
+    })
+    @GetMapping(value = "/{skuId}/rfids", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity getSKUDetail(@PathVariable Integer skuId,
+                                     @RequestParam(required = false) Integer page,
+                                     @RequestParam(required = false) Integer size) {
+        page = Constants.ensurePositiveValue(page, 1);
+        size = Constants.ensurePositiveValue(size, Constants.DEFAULT_PAGE_SIZE);
+        PageInfo<SKU> pageInfo = null;
+        /*if (StringUtils.isNotBlank(q)) {
+            pageInfo = skuService.searchListByKeyword(q, page, size);
+        } else {
+            pageInfo = skuService.getListByPage(new SKU(), page, size);
+        }*/
         return new ResponseEntity(pageInfo, HttpStatus.OK);
     }
 }

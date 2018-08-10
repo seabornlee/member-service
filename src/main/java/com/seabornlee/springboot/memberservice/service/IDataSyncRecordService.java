@@ -9,6 +9,8 @@ public interface IDataSyncRecordService {
 
     public PageInfo<DataSyncRecord> getListByPage(DataSyncRecord record, int page, int size);
 
+    public DataSyncRecord getRecordById(Integer recordId);
+
     public void saveRecord(DataSyncRecord record);
 
     public void updateRecord(DataSyncRecord record);
