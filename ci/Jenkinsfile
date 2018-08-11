@@ -42,25 +42,25 @@ pipeline {
 
     post {
         success {
-            bearychatSend message: "Started [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
                         color: '#0000FF',
                         attachmentText: "Build Succeed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
                         channel: "Timeline"
         }
         failure {
-            bearychatSend message: "Started [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
                         color: '#FF0000',
                         attachmentText: "Build Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
                         channel: "Timeline"
         }
         unstable {
-            bearychatSend message: "Started [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
                         color: '#808080',
                         attachmentText: "Build Unstable: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
                         channel: "Timeline"
         }
         aborted {
-            bearychatSend message: "Started [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
                         color: '#000000',
                         attachmentText: "Build Aborted: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
                         channel: "Timeline"
