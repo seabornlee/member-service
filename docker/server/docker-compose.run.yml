@@ -5,7 +5,7 @@ services:
     container_name: potato-cloud-rfid
     volumes:
       - ../../:/app
-      - /data/potato-cloud-auc/logs:/data/potato-cloud-auc/logs
+      - /data/potato-cloud-rfid/logs:/data/potato-cloud-rfid/logs
     environment:
       TZ: Asia/Shanghai
     working_dir: /app
