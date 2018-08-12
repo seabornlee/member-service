@@ -67,8 +67,8 @@ server:
 eureka:
     client:
         serviceUrl:
-            defaultZone: http://localhost:9011/eureka/
-            #defaultZone: http://172.16.2.15:9011/eureka/
+            #defaultZone: http://localhost:9011/eureka/
+            defaultZone: http://172.16.2.15:9011/eureka/
     instance:
         prefer-ip-address: true
         #ip-address: 172.16.2.15
