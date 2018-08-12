@@ -1,13 +1,13 @@
 package com.seabornlee.springboot.memberservice.domain;
 
+import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Data
 @Table(name = "warehouse_bin")
 public class WarehouseBin {
 
@@ -43,135 +43,16 @@ public class WarehouseBin {
     @Column(name = "warehouse_id")
     private Integer warehouseId;
 
+    @Column(name = "warehouse_no")
     private String warehouseNo;
 
+    @Column(name = "capacity")
     private Integer capacity;
 
+    @Column(name = "tenant_id")
     private Integer tenantId;
 
-   public Integer getId() {
-        return id;
-    }
+    @Column(name = "rfid")
+    private String rfid; // RFID 编号
 
-    public WarehouseBin setId(Integer id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getBinNo() {
-        return binNo;
-    }
-
-    public WarehouseBin setBinNo(String binNo) {
-        this.binNo = binNo;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public WarehouseBin setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getAreaType() {
-        return areaType;
-    }
-
-    public WarehouseBin setAreaType(String areaType) {
-        this.areaType = areaType;
-        return this;
-    }
-
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public WarehouseBin setAreaName(String areaName) {
-        this.areaName = areaName;
-        return this;
-    }
-
-    public String getShelfNo() {
-        return shelfNo;
-    }
-
-    public WarehouseBin setShelfNo(String shelfNo) {
-        this.shelfNo = shelfNo;
-        return this;
-    }
-
-    public Boolean getTmp() {
-        return isTmp;
-    }
-
-    public WarehouseBin setTmp(Boolean tmp) {
-        isTmp = tmp;
-        return this;
-    }
-
-    public Boolean getEnabled() {
-        return isEnabled;
-    }
-
-    public WarehouseBin setEnabled(Boolean enabled) {
-        isEnabled = enabled;
-        return this;
-    }
-
-    public Integer getDataSource() {
-        return dataSource;
-    }
-
-    public WarehouseBin setDataSource(Integer dataSource) {
-        this.dataSource = dataSource;
-        return this;
-    }
-
-    public Integer getWarehouseId() {
-        return warehouseId;
-    }
-
-    public WarehouseBin setWarehouseId(Integer warehouseId) {
-        this.warehouseId = warehouseId;
-        return this;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public WarehouseBin setCapacity(Integer capacity) {
-        this.capacity = capacity;
-        return this;
-    }
-
-    public String getAreaNo() {
-        return areaNo;
-    }
-
-    public WarehouseBin setAreaNo(String areaNo) {
-        this.areaNo = areaNo;
-        return this;
-    }
-
-    public String getWarehouseNo() {
-        return warehouseNo;
-    }
-
-    public WarehouseBin setWarehouseNo(String warehouseNo) {
-        this.warehouseNo = warehouseNo;
-        return this;
-    }
-
-    public Integer getTenantId() {
-        return tenantId;
-    }
-
-    public WarehouseBin setTenantId(Integer tenantId) {
-        this.tenantId = tenantId;
-        return this;
-    }
 }

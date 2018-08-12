@@ -1,4 +1,8 @@
+debug: true
+
 spring:
+    application:
+        name: potato-cloud-rfid
     transaction:
         aopPointcutExpression: "execution (* com.seabornlee.springboot.memberservice.service..*.*(..))"
         txAdviceMap:
@@ -12,9 +16,12 @@ spring:
     datasource:
         name: db
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://127.0.0.1:3308/member_service?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-        username: root
-        password: auto@163
+        #url: jdbc:mysql://127.0.0.1:3308/member_service?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+        #username: root
+        #password: auto@163
+        url: jdbc:mysql://carcms.demo.sdk4.com:13323/potato?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: potato
+        password: Potato-plan-2018pwd
         driver-class-name: com.mysql.jdbc.Driver
         minIdle: 20
         maxActive: 200
@@ -32,6 +39,9 @@ spring:
         filters: stat
         druidLoginName: druid
         druidPassword: druid
+    flyway:
+        enabled: true
+        baselineOnMigrate: true
 
 mybatis:
      mapperLocations: classpath*:mapping/**/*.xml
@@ -52,7 +62,17 @@ mybatis:
 
 
 server:
-    port: 8888
+    port: 9051
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:9011/eureka/
+            #defaultZone: http://172.16.2.15:9011/eureka/
+    instance:
+        prefer-ip-address: true
+        #ip-address: 172.16.2.15
+        #status-page-url: http://172.16.2.15:9011/eureka/swagger-ui.html
 
 logging:
     level:

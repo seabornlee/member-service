@@ -3,6 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.potato.cloud</groupId>
+        <artifactId>potato-cloud-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
     <groupId>com.seabornlee.springboot</groupId>
     <artifactId>member-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -11,13 +17,6 @@
     <name>member-service</name>
     <description>Member Service</description>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -25,18 +24,19 @@
         <unit-tests.skip>false</unit-tests.skip>
         <integration-tests.skip>false</integration-tests.skip>
     </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-openfeign</artifactId>
-                <version>2.0.1.BUILD-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>com.potato.cloud</groupId>
+            <artifactId>potato-cloud-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.potato.cloud</groupId>
+            <artifactId>potato-cloud-auc-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -53,11 +53,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- spring cloud -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
         <!--mapper-->
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>2.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>persistence-api</artifactId>
+                    <groupId>javax.persistence</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -100,6 +113,7 @@
             <artifactId>flyway-core</artifactId>
             <version>5.1.4</version>
         </dependency>
+        
         <!-- mybatis -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -118,26 +132,43 @@
             <version>1.1.10</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.3.1.Final</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>4.0.1</version>
+        </dependency>
+
+        <!-- hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.common</groupId>
+            <artifactId>hibernate-commons-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
         </dependency>
 
         <!-- swagger 2-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
+            <version>2.9.2</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
+            <version>2.9.2</version>
         </dependency>
 
         <dependency>
@@ -156,6 +187,18 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
     <repositories>
         <repository>
@@ -248,6 +291,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.flywaydb</groupId>
