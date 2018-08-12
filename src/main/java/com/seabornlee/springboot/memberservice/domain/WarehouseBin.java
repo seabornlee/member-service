@@ -1,11 +1,13 @@
 package com.seabornlee.springboot.memberservice.domain;
 
+import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Data
 @Table(name = "warehouse_bin")
 public class WarehouseBin {
 
@@ -41,10 +43,13 @@ public class WarehouseBin {
     @Column(name = "warehouse_id")
     private Integer warehouseId;
 
+    @Column(name = "warehouse_no")
     private String warehouseNo;
 
+    @Column(name = "capacity")
     private Integer capacity;
 
+    @Column(name = "tenant_id")
     private Integer tenantId;
 
     public Integer getId() {
@@ -172,4 +177,7 @@ public class WarehouseBin {
         this.tenantId = tenantId;
         return this;
     }
+    @Column(name = "rfid")
+    private String rfid; // RFID 编号
+
 }

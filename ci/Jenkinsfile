@@ -1,33 +1,20 @@
 pipeline {
     agent any
 
-    triggers { pollSCM('* * * * *') }
-
     stages {
-        stage('Checkout repo') {
+        stage('docker-compose-stop') {
             steps {
-                git url: 'https://github.com/seabornlee/member-service.git', branch: 'master'
+                sh './stopbydocker.sh'
             }
         }
-
-        stage('Test') {
+        stage('docker-compose-install') {
             steps {
-                sh './mvnw test -Dcheckstyle.skip=true'
-                junit 'target/surefire-reports/*.xml'
-                jacoco execPattern:'target/jacoco.exec', classPattern: '**/classes', sourcePattern: 'src/main/java'
+                sh './buildbydocker.sh'
             }
         }
-
-        stage('Check Style') {
+        stage('docker-compose-up') {
             steps {
-                sh './mvnw validate'
-                step([$class: 'CheckStylePublisher', pattern: 'target/checkstyle-result.xml'])
-            }
-        }
-
-        stage('Package') {
-            steps {
-                sh './mvnw clean package -Dunit-tests.skip=true -Dintegration-tests.skip=true'
+                sh './runbydocker.sh'
             }
         }
     }

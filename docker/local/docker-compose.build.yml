@@ -1,0 +1,12 @@
+version: '3'
+services:
+  maven:
+    image: maven
+    container_name: potato-cloud-maven
+    volumes:
+      - ../../:/app
+      - ../maven/settings.xml:/usr/share/maven/conf/settings.xml
+    environment:
+      TZ: Asia/Shanghai
+    command: bash -c "cd /app && mvn clean package -Ddockerfile.skip -Dmaven.test.skip=true"
+ 

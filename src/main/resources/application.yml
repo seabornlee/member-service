@@ -1,4 +1,8 @@
+debug: true
+
 spring:
+    application:
+        name: potato-cloud-rfid
     transaction:
         aopPointcutExpression: "execution (* com.seabornlee.springboot.memberservice.service..*.*(..))"
         txAdviceMap:
@@ -29,11 +33,14 @@ spring:
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 50
         removeAbandoned: true
-        filters: stat
+        filters: statc
         druidLoginName: druid
         druidPassword: druid
     profiles:
         active: @activatedProperties@
+    flyway:
+        enabled: true
+        baselineOnMigrate: true
 
 mybatis:
      mapperLocations: classpath*:mapping/**/*.xml
@@ -54,7 +61,17 @@ mybatis:
 
 
 server:
-    port: 8888
+    port: 9051
+
+eureka:
+    client:
+        serviceUrl:
+            #defaultZone: http://localhost:9011/eureka/
+            defaultZone: http://172.16.2.15:9011/eureka/
+    instance:
+        prefer-ip-address: true
+        #ip-address: 172.16.2.15
+        #status-page-url: http://172.16.2.15:9011/eureka/swagger-ui.html
 
 logging:
     level:

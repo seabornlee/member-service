@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    triggers { pollSCM('* * * * *') }
+
+    stages {
+        stage('Checkout repo') {
+            steps {
+                git url: 'https://github.com/seabornlee/member-service.git', branch: 'master'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './mvnw test -Dcheckstyle.skip=true'
+                junit 'target/surefire-reports/*.xml'
+                jacoco execPattern:'target/jacoco.exec', classPattern: '**/classes', sourcePattern: 'src/main/java'
+            }
+        }
+
+        stage("build & SonarQube analysis") {
+            steps {
+                withSonarQubeEnv('My SonarQube Server') {
+                    sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
+
+        stage('Check Style') {
+            steps {
+                sh './mvnw validate'
+                step([$class: 'CheckStylePublisher', pattern: 'target/checkstyle-result.xml'])
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh './mvnw clean package -Dunit-tests.skip=true -Dintegration-tests.skip=true'
+            }
+        }
+    }
+
+    post {
+        success {
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+                        color: '#0000FF',
+                        attachmentText: "Build Succeed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        channel: "Timeline"
+        }
+        failure {
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+                        color: '#FF0000',
+                        attachmentText: "Build Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        channel: "Timeline"
+        }
+        unstable {
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+                        color: '#808080',
+                        attachmentText: "Build Unstable: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        channel: "Timeline"
+        }
+        aborted {
+            bearychatSend message: "Finished [${env.JOB_NAME} #${env.BUILD_NUMBER}](${env.BUILD_URL})",
+                        color: '#000000',
+                        attachmentText: "Build Aborted: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        channel: "Timeline"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  java:
+    image: java:8
+    container_name: potato-cloud-rfid
+    volumes:
+      - ../../:/app
+      - /data/potato-cloud-rfid/logs:/data/potato-cloud-rfid/logs
+    environment:
+      TZ: Asia/Shanghai
+    working_dir: /app
+    ports:
+      - "9051:9051"
+    command: ['java','-jar','/app/target/member-service-1.0.0.jar']

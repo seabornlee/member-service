@@ -176,8 +176,8 @@ public class ESpiritDataSyncService extends AbstractDataSyncService {
                 bin.setAreaType(one.getString("warehouse_area_type"));
                 bin.setAreaNo(one.getString("warehouse_area_no"));
                 bin.setShelfNo(one.getString("warehouse_shelf_no"));
-                bin.setEnabled(one.getBoolean("is_enabled_code"));
-                bin.setTmp(one.getBoolean("is_tmp_code"));
+                // bin.setEnabled(one.getBoolean("is_enabled_code"));
+                // bin.setTmp(one.getBoolean("is_tmp_code"));
                 bin.setDataSource(DataSourceEnum.ESpirit.getValue());
                 bin.setCapacity(one.getInteger("capacity"));
                 bin.setTenantId(one.getInteger("tenant_id"));
