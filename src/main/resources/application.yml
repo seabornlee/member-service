@@ -1,0 +1,66 @@
+spring:
+    transaction:
+        aopPointcutExpression: "execution (* com.seabornlee.springboot.memberservice.service..*.*(..))"
+        txAdviceMap:
+            save: "PROPAGATION_REQUIRED,-Exception"
+            add: "PROPAGATION_REQUIRED,-Exception"
+            insert: "PROPAGATION_REQUIRED,-Exception"
+            update: "PROPAGATION_REQUIRED,-Exception"
+            delete: "PROPAGATION_REQUIRED,-Exception"
+            remove: "PROPAGATION_REQUIRED,-Exception"
+            tx: "PROPAGATION_REQUIRED,-Exception"
+    datasource:
+        name: db
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://127.0.0.1:3308/member_service?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+        username: root
+        password: auto@163
+        driver-class-name: com.mysql.jdbc.Driver
+        minIdle: 20
+        maxActive: 200
+        initialSize: 10
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 1 from dual
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 50
+        removeAbandoned: true
+        filters: stat
+        druidLoginName: druid
+        druidPassword: druid
+
+mybatis:
+     mapperLocations: classpath*:mapping/**/*.xml
+     typeAliasesPackage: com.seabornlee.springboot.memberservice.domain
+     mapperScanPackage: com.seabornlee.springboot.memberservice.mapper
+     configLocation: classpath:mybatis_config.xml
+     #page helper
+     pagehelper:
+        properties:
+            offsetAsPageNum: true
+            rowBoundsWithCount: true
+            reasonable: true
+            pageSizeZero: true
+            helper-dialect: mysql
+            support-methods-arguments: true
+            params: count=countSql
+#通用mapper
+
+
+server:
+    port: 8888
+
+logging:
+    level:
+        com.seabornlee.springboot.memberservice.mapper: debug
+
+#线程池配置
+thread:
+    pool:
+        corePoolSize: 10
+        maxPoolSize: 20
+        keepAliveSeconds: 300

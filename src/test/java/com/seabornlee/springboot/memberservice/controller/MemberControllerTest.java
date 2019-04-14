@@ -50,4 +50,16 @@ public class MemberControllerTest {
                 statusCode(404);
     }
 
+    @Test
+    public void should_get_all_members(){
+        Mockito.when(memberService.selectAll()).thenThrow(new NoSuchElementException());
+
+        given().
+                standaloneSetup(memberController).
+        when().
+                get("/members/list").
+        then().
+                statusCode(404);
+    }
+
 }
